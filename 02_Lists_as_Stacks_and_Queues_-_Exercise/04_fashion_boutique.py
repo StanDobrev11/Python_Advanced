@@ -31,20 +31,11 @@ rack_current_load = 0
 racks_used = 0
 while clothes_by_weight:
     next_cloth = clothes_by_weight.pop()
-    # if rack_current_load + next_cloth > rack_max_load:
-    #     rack_current_load = 0
-    #     racks_used += 1
-    # elif rack_current_load + next_cloth == rack_max_load:
-    #     rack_current_load = 0
-    #     racks_used += 1
-    #     continue
-    # rack_current_load += next_cloth
     if rack_current_load + next_cloth <= rack_max_load:
         rack_current_load += next_cloth
     else:
         rack_current_load = next_cloth
         racks_used += 1
-
 
 if rack_current_load > 0:
     racks_used += 1
