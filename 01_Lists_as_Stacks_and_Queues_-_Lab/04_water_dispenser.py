@@ -44,17 +44,16 @@ while not name == 'Start':
 
 command = input()
 while not command == 'End':
-    command = command.split()
-    if command[0] == 'refill':
-        litters = int(command[1])
-        quantity_of_water += litters
+    if command.startswith('refill'):
+        quantity_of_water += int(command.split()[-1])
     else:
-        litters = int(command[0])
-        if quantity_of_water - litters >= 0:
+        litters = int(command)
+        name = queue.popleft()
+        if quantity_of_water >= litters:
             quantity_of_water -= litters
-            print(f"{queue.popleft()} got water")
+            print(f"{name} got water")
         else:
-            print(f"{queue.popleft()} must wait")
+            print(f"{name} must wait")
 
     command = input()
 
