@@ -39,8 +39,10 @@ toss = int(input())
 queue = deque(children)
 
 while len(queue) > 1:
-    for _ in range(toss - 1):
-        queue.append(queue.popleft())
-    print(f"Removed {queue.popleft()}")
+    # for _ in range(toss - 1):
+    #     queue.append(queue.popleft())
+    queue.rotate(-toss)
+    print(f"Removed {queue.pop()}")
+    # print(f"Removed {queue.popleft()}")
 
 print(f"Last is {queue.popleft()}")
