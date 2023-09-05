@@ -11,7 +11,7 @@ Input                                   Output
                                         (2 + 3)
 """
 
-equation = list(input())
+equation = input()
 stack = []
 for idx in range(len(equation)):
     if equation[idx] == '(':
@@ -19,4 +19,5 @@ for idx in range(len(equation)):
     elif equation[idx] == ')':
         start_idx = stack.pop()
         end_idx = idx
-        print("".join(equation[start_idx:end_idx + 1]))
+        # print("".join(equation[start_idx:end_idx + 1])) if the input is cast to list "equation = list(input())"
+        print(equation[start_idx:end_idx + 1])

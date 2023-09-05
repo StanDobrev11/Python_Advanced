@@ -16,12 +16,24 @@ Oscar
 Olivia
 Linda
 End
-George
-Peter
-William
 
 Anna                    3 people remaining.
 Emma
 Alexander
 End
 """
+
+from collections import deque
+
+queue = deque()
+
+name = input()
+while name != 'End':
+    if name == 'Paid':
+        while queue:
+            print(queue.popleft())
+    else:
+        queue.append(name)
+    name = input()
+
+print(f'{len(queue)} people remaining.')
