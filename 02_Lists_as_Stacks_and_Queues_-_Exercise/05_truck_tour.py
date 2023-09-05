@@ -76,13 +76,13 @@ while distance_queue:
     distance = distance_queue.popleft()
     fuel = fuel_queue.popleft()
     petrol_in_tank += fuel
-
     if petrol_in_tank >= distance:
         petrol_in_tank -= distance
         distance_stack.append(distance)
         fuel_stack.append(fuel)
     else:
-
+        distance_stack.append(distance)
+        fuel_stack.append(fuel)
         distance_queue.extend(distance_stack)
         fuel_queue.extend(fuel_stack)
         distance_stack = []
