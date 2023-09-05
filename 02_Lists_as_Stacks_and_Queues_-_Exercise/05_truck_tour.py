@@ -42,7 +42,7 @@ Input                   Output
 12 2
 13 1
                         4
-8
+9
 6 15
 10 1
 10 1
@@ -52,12 +52,11 @@ Input                   Output
 6 6
 10 5
 6 12
-                        0
+                        1
 """
 from collections import deque
 
 gas_stations = int(input())
-
 
 distance_queue = deque()
 fuel_queue = deque()
@@ -75,14 +74,12 @@ petrol_in_tank = 0
 while distance_queue:
     distance = distance_queue.popleft()
     fuel = fuel_queue.popleft()
+    distance_stack.append(distance)
+    fuel_stack.append(fuel)
     petrol_in_tank += fuel
     if petrol_in_tank >= distance:
         petrol_in_tank -= distance
-        distance_stack.append(distance)
-        fuel_stack.append(fuel)
     else:
-        distance_stack.append(distance)
-        fuel_stack.append(fuel)
         distance_queue.extend(distance_stack)
         fuel_queue.extend(fuel_stack)
         distance_stack = []
