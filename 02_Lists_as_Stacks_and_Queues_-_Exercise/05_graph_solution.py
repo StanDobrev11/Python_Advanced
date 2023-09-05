@@ -22,17 +22,16 @@ class Edge:
         self.weight = weight
 
 
-def dfs(node, graph, visited, total_weight, final):
-    weight = graph[node].weight
-    total_weight += weight
+def dfs(node, tree, visited, total_weight, final):
+    total_weight += tree[node].weight
     if total_weight < 0:
         return
     if node not in visited:
         visited.append(node)
     else:
-        final.append(graph[node].source)
+        final.append(tree[node].source)
         return
-    dfs(graph[node].destination, graph, visited, total_weight, final)
+    dfs(tree[node].destination, tree, visited, total_weight, final)
 
 
 edges = int(input())
