@@ -41,8 +41,6 @@ End
 
 import datetime
 from collections import deque
-from math import ceil
-
 
 robots = input().split(';')
 robots_process_time = {}
@@ -61,23 +59,23 @@ detail = input()
 robots_next_start = {}
 while not detail == 'End':
     detail_queue.append(detail)
-    while detail_queue:
-        seconds_lapsed += 1
-        seconds_as_delta = datetime.timedelta(seconds=seconds_lapsed)
-        current_time = start_time + seconds_as_delta
-
-        if current_time in robots_next_start.keys():
-            name = robots_next_start[current_time]
-            robots_in_queue.append(name)
-
-        if robots_in_queue:
-            name = robots_in_queue.popleft()
-            print(f'{name} - {detail_queue.popleft()} '
-                  f'[{str(current_time) if len(str(current_time)) == 8 else "0" + str(current_time)}]')
-            robot_work_time = datetime.timedelta(seconds=robots_process_time[name])
-            next_start = datetime.timedelta(seconds=current_time.total_seconds()) + robot_work_time
-            robots_next_start[next_start] = name
-
-
-
     detail = input()
+
+while detail_queue:
+    seconds_lapsed += 1
+    seconds_as_delta = datetime.timedelta(seconds=seconds_lapsed)
+    current_time = start_time + seconds_as_delta
+
+    if current_time in robots_next_start.keys():
+        name = robots_next_start[current_time]
+        robots_in_queue.append(name)
+
+    if robots_in_queue:
+        name = robots_in_queue.popleft()
+        print(f'{name} - {detail_queue.popleft()} '
+              f'[{str(current_time) if len(str(current_time)) == 8 else "0" + str(current_time)}]')
+        robot_work_time = datetime.timedelta(seconds=robots_process_time[name])
+        next_start = datetime.timedelta(seconds=current_time.total_seconds()) + robot_work_time
+        robots_next_start[next_start] = name
+    else:
+        detail_queue.rotate(-1)
