@@ -20,3 +20,23 @@ Input               Output
 {[(])}              NO
 {{[[(())]]}}        YES
 """
+
+string_input = input()
+
+pare_dict = {')': '(', ']': '[', '}': '{'}
+is_a_match = True
+stack = []
+for idx in range(len(string_input)):
+    if string_input[idx] == ')' or string_input[idx] == ']' or string_input[idx] == '}':
+        if stack and pare_dict[string_input[idx]] == stack[-1]:
+            stack.pop()
+            continue
+        else:
+            is_a_match = False
+            break
+    stack.append(string_input[idx])
+
+if is_a_match:
+    print('YES')
+else:
+    print('NO')

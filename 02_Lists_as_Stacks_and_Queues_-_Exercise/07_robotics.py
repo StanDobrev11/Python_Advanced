@@ -20,6 +20,10 @@ detail
 glass
 wood
 apple
+mango
+rocket
+wool
+eggs
 End
                                 ROB - detail [08:00:01]
                                 SS2 - glass [08:00:02]
@@ -38,3 +42,35 @@ End
                                 ROB - glass [08:00:16]
                                 ROB - sock [08:00:24]
 """
+
+import datetime
+from collections import deque
+
+robots = input().split(';')
+robots_process_time = {}
+robots_in_queue = deque()
+for robot in robots:
+    name, process_time = robot.split('-')
+    robots_process_time[int(process_time)] = name
+    robots_in_queue.append(name)
+
+h, m, s = [int(x) for x in input().split(':')]
+start_time = datetime.timedelta(hours=h, minutes=m, seconds=s)
+
+seconds_lapsed = 0
+detail_queue = deque()
+detail = input()
+while not detail == 'End':
+    detail_queue.append(detail)
+    while detail_queue:
+        seconds_lapsed += 1
+        for time, name in robots_process_time.items():
+            if seconds_lapsed % time == 0 and name not in robots_in_queue:
+                robots_in_queue.append(name)
+
+        if robots_in_queue:
+            seconds_as_delta = datetime.timedelta(seconds=seconds_lapsed)
+            current_time = start_time + seconds_as_delta
+            print(f'{robots_in_queue.popleft()} - {detail_queue.popleft()} [{current_time}]')
+
+    detail = input()
