@@ -37,6 +37,27 @@ End
                                 ROB - wood [08:00:08]
                                 ROB - glass [08:00:16]
                                 ROB - sock [08:00:24]
+
+ROB-8;JOHNY-6;ASEN-2
+7:59:59
+detail
+glass
+wood
+sock
+pepper
+door
+handle
+matchbox
+End
+                                ROB - detail [08:00:00]
+                                JOHNY - glass [08:00:01]
+                                ASEN - wood [08:00:02]
+                                ASEN - pepper [08:00:04]
+                                ASEN - handle [08:00:06]
+                                ROB - sock [08:00:08]
+                                JOHNY - door [08:00:09]
+                                ASEN - matchbox [08:00:10]
+
 """
 from collections import deque
 import datetime
@@ -67,14 +88,17 @@ while detail_queue:
     current_time = start_time + seconds_as_delta
 
     if current_time in robots_next_start.keys():
-        name = robots_next_start[current_time]
-        robots_in_queue.append(name)
+        for name in robots_next_start[current_time]:
+            robots_in_queue.append(name)
 
     if robots_in_queue:
         name = robots_in_queue.popleft()
         print(f'{name} - {detail_queue.popleft()} [{"{:0>8}".format(str(current_time))}]')
         robot_work_time = datetime.timedelta(seconds=robots_process_time[name])
         next_start = datetime.timedelta(seconds=current_time.total_seconds()) + robot_work_time
-        robots_next_start[next_start] = name
+        if next_start not in robots_next_start:
+            robots_next_start[next_start] = []
+        robots_next_start[next_start].append(name)
+
     else:
         detail_queue.rotate(-1)

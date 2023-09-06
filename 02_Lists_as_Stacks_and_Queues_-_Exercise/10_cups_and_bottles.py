@@ -45,3 +45,41 @@ Input                   Output
                         Wasted litters of
                         water: 1
 """
+from collections import deque
+
+cups = deque([int(x) for x in input().split()])
+bottles = [int(x) for x in input().split()]
+
+max_iters = max(len(bottles), len(cups))
+
+current_cup = cups.popleft()
+current_btl = bottles.pop()
+water_wasted = 0
+bottles_finished = False
+cups_finished = False
+for _ in range(max_iters):
+    if current_btl >= current_cup:
+        water_wasted += current_btl - current_cup
+        if cups_finished or bottles_finished:
+            break
+        current_cup = cups.popleft()
+        current_btl = bottles.pop()
+    else:
+        if cups_finished or bottles_finished:
+            break
+        current_cup -= current_btl
+        current_btl = bottles.pop()
+
+    if not bottles:
+        bottles_finished = True
+    if not cups:
+        cups_finished = True
+
+if bottles_finished:
+    cups = [str(x) for x in cups]
+    print(f"Cups: {' '.join(cups)}")
+    print(f'Wasted litters of water: {water_wasted}')
+elif cups_finished:
+    bottles = [str(x) for x in bottles]
+    print(f"Bottles: {' '.join(bottles)}")
+    print(f'Wasted litters of water: {water_wasted}')
