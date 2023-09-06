@@ -38,7 +38,6 @@ End
                                 ROB - glass [08:00:16]
                                 ROB - sock [08:00:24]
 """
-
 import datetime
 from collections import deque
 
@@ -72,8 +71,7 @@ while detail_queue:
 
     if robots_in_queue:
         name = robots_in_queue.popleft()
-        print(f'{name} - {detail_queue.popleft()} '
-              f'[{str(current_time) if len(str(current_time)) == 8 else "0" + str(current_time)}]')
+        print(f'{name} - {detail_queue.popleft()} [{"{:0>8}".format(str(current_time))}]')
         robot_work_time = datetime.timedelta(seconds=robots_process_time[name])
         next_start = datetime.timedelta(seconds=current_time.total_seconds()) + robot_work_time
         robots_next_start[next_start] = name

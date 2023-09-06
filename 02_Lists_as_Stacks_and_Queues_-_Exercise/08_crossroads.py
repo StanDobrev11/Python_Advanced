@@ -53,18 +53,72 @@ green
 END
                     A crash happened!
                     Hummer was hit at e.
+
+2
+0
+Mercedes
+Hummer
+green
+Hummer
+Mercedes
+green
+END
 """
 
+from collections import deque
 
-from datetime import datetime, timedelta
-from math import ceil
-from time import time, strftime
+green_light_duration = int(input())
+free_window_duration = int(input())
 
+raw_input = input()
+car_queue = deque()
 
-# now = datetime(hour=2, minute=5, second=1)
-# now.strftime()
+car_stack = []
+crashed_at = ''
+is_crashed = False
 
-time_delta = timedelta(hours=10, minutes=54, seconds=30)
+while raw_input != 'END':
+    enter_duration = green_light_duration
+    exit_duration = free_window_duration
+    all_passed = False
+    if raw_input == 'green':
+        car = car_queue.popleft()
+        car_stack.append(car)
+        car = deque(list(car))
+        while car and not is_crashed:  # and enter_duration > 0 and exit_duration > 0:
+            while enter_duration > 0:
+                car.popleft()
+                enter_duration -= 1
+                if enter_duration > 0 and not car:
+                    if car_queue:
+                        car = car_queue.popleft()
+                        car_stack.append(car)
+                        car = deque(list(car))
+                    else:
+                        all_passed = True
+                        break
+            while exit_duration > 0 and not all_passed:
+                if car:
+                    car.popleft()
+                    exit_duration -= 1
+                else:
+                    all_passed = True
+                    break
+            if car and exit_duration == 0:
+                is_crashed = True
+                crashed_at = car.popleft()
+                break
 
+    if is_crashed:
+        break
+    if raw_input != 'green':
+        car_model = raw_input
+        car_queue.append(car_model)
+    raw_input = input()
 
-print("{:0>8}".format(str(time_delta)))
+if is_crashed:
+    print('A crash happened!')
+    print(f'{car_stack[-1]} was hit at {crashed_at}.')
+else:
+    print('Everyone is safe.')
+    print(f'{len(car_stack)} total cars passed the crossroads.')
