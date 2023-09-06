@@ -54,3 +54,17 @@ END
                     A crash happened!
                     Hummer was hit at e.
 """
+
+
+from datetime import datetime, timedelta
+from math import ceil
+from time import time, strftime
+
+
+# now = datetime(hour=2, minute=5, second=1)
+# now.strftime()
+
+time_delta = timedelta(hours=10, minutes=54, seconds=30)
+
+
+print("{:0>8}".format(str(time_delta)))
