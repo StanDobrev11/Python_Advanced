@@ -50,4 +50,63 @@ Input                           Output                              Comments
                                 Ping!
                                 Ping!
                                 Couldn't get through. Locks left: 3
+
+50
+2
+1 11 10 5 11 10 20
+1
+1500
 """
+from collections import deque
+
+
+def load_gun(barrel_size, bullets_size):
+    barrel = deque()
+    if len(bullets_size) >= barrel_size:
+        for _ in range(barrel_size):
+            barrel.append(bullets_size.pop())
+    else:
+        while bullets_size:
+            barrel.append(bullets_size.pop())
+    return barrel
+
+
+bullet_cost = int(input())
+barrel_size = int(input())
+
+bullets_size = deque(int(x) for x in input().split())
+locks_size = deque(int(x) for x in input().split())
+bullets_count = len(bullets_size)
+
+value_of_intelligence = int(input())
+barrel = load_gun(barrel_size, bullets_size)
+
+if bullets_size or barrel:
+    has_bullets = True
+else:
+    has_bullets = False
+
+while locks_size and has_bullets:
+    if barrel:
+        shot_size = barrel.popleft()
+        if shot_size <= locks_size[0]:
+            print('Bang!')
+            locks_size.popleft()
+        else:
+            print('Ping!')
+    else:
+        if bullets_size:
+            barrel = load_gun(barrel_size, bullets_size)
+            print('Reloading!')
+        else:
+            has_bullets = False
+            break
+
+if locks_size:
+    print(f"Couldn't get through. Locks left: {len(locks_size)}")
+else:
+    bullets_used = bullets_count - len(bullets_size)
+    cost = value_of_intelligence - (bullets_used * bullet_cost)
+    if len(bullets_size) > 0:
+        print('Reloading!')
+    print(f'{len(bullets_size)} bullets left. Earned ${cost}')

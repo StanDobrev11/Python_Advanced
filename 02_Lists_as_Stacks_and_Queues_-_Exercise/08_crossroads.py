@@ -81,11 +81,11 @@ while raw_input != 'END':
     enter_duration = green_light_duration
     exit_duration = free_window_duration
     all_passed = False
-    if raw_input == 'green':
+    if raw_input == 'green' and car_queue:
         car = car_queue.popleft()
         car_stack.append(car)
         car = deque(list(car))
-        while car and not is_crashed:  # and enter_duration > 0 and exit_duration > 0:
+        while car and not is_crashed:
             while enter_duration > 0:
                 car.popleft()
                 enter_duration -= 1

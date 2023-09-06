@@ -38,8 +38,9 @@ End
                                 ROB - glass [08:00:16]
                                 ROB - sock [08:00:24]
 """
-import datetime
 from collections import deque
+import datetime
+
 
 robots = input().split(';')
 robots_process_time = {}
