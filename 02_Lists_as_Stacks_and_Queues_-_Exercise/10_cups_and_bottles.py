@@ -70,7 +70,7 @@ while True:
         current_btl = bottles.pop()
 
 if not bottles:
-    cups = [str(x) for x in cups]
+    cups = map(str, cups)
     print(f"Cups: {' '.join(cups)}")
     print(f'Wasted litters of water: {water_wasted}')
 elif not cups:
