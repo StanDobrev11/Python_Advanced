@@ -38,8 +38,8 @@ End
                                 ROB - glass [08:00:16]
                                 ROB - sock [08:00:24]
 
-ROB-8;JOHNY-6;ASEN-2
-7:59:59
+ROB-8;JOHNY-6;ASEN-7
+23:59:59
 detail
 glass
 wood
@@ -48,6 +48,13 @@ pepper
 door
 handle
 matchbox
+phone
+rocket
+keyboard
+mouse
+dominoes
+chess
+calculator
 End
                                 ROB - detail [08:00:00]
                                 JOHNY - glass [08:00:01]

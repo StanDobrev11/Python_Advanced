@@ -55,31 +55,25 @@ max_iters = max(len(bottles), len(cups))
 current_cup = cups.popleft()
 current_btl = bottles.pop()
 water_wasted = 0
-bottles_finished = False
-cups_finished = False
-for _ in range(max_iters):
+
+while True:
     if current_btl >= current_cup:
         water_wasted += current_btl - current_cup
-        if cups_finished or bottles_finished:
+        if not cups or not bottles:
             break
         current_cup = cups.popleft()
         current_btl = bottles.pop()
     else:
-        if cups_finished or bottles_finished:
-            break
         current_cup -= current_btl
+        if not bottles:
+            break
         current_btl = bottles.pop()
 
-    if not bottles:
-        bottles_finished = True
-    if not cups:
-        cups_finished = True
-
-if bottles_finished:
+if not bottles:
     cups = [str(x) for x in cups]
     print(f"Cups: {' '.join(cups)}")
     print(f'Wasted litters of water: {water_wasted}')
-elif cups_finished:
+elif not cups:
     bottles = [str(x) for x in bottles]
     print(f"Bottles: {' '.join(bottles)}")
     print(f'Wasted litters of water: {water_wasted}')

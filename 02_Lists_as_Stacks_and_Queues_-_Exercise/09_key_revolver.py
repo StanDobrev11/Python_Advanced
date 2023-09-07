@@ -53,9 +53,11 @@ Input                           Output                              Comments
 
 50
 2
-1 11 10 5 11 10 20
-1
+1 11 10 5 11 10 20 18 17 23 15 16
+20
 1500
+                                Bang!
+                                11 bullets left. Earned $1450
 """
 from collections import deque
 
@@ -86,9 +88,11 @@ if bullets_size or barrel:
 else:
     has_bullets = False
 
+bullets_used = 0
 while locks_size and has_bullets:
     if barrel:
         shot_size = barrel.popleft()
+        bullets_used += 1
         if shot_size <= locks_size[0]:
             print('Bang!')
             locks_size.popleft()
@@ -105,8 +109,7 @@ while locks_size and has_bullets:
 if locks_size:
     print(f"Couldn't get through. Locks left: {len(locks_size)}")
 else:
-    bullets_used = bullets_count - len(bullets_size)
     cost = value_of_intelligence - (bullets_used * bullet_cost)
-    if len(bullets_size) > 0:
+    if len(bullets_size) > 0 and len(barrel) == 0:
         print('Reloading!')
-    print(f'{len(bullets_size)} bullets left. Earned ${cost}')
+    print(f'{len(bullets_size) + len(barrel)} bullets left. Earned ${cost}')
