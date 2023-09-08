@@ -51,10 +51,10 @@ def read_input_to_list(count):
     return input_set
 
 
-def guests_arrived(line, arrived: set) -> set:
-    while not line == 'END':
-        arrived.add(line)
-        line = input()
+def guests_arrived(line_input, arrived: set) -> set:
+    while not line_input == 'END':
+        arrived.add(line_input)
+        line_input = input()
 
     return arrived
 
@@ -68,12 +68,12 @@ def print_result(result):
 number_of_guests = int(input())
 
 reservation_list = read_input_to_list(number_of_guests)
-guests_at_party = guests_arrived(input(), set())
+line = input()
+guests_at_party = guests_arrived(line, set())
 guests_not_arrived = guests_at_party.symmetric_difference(reservation_list)
 
 print_result(sorted(guests_not_arrived))
 
 print(tracemalloc.get_traced_memory())
-
 
 tracemalloc.stop()
