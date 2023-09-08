@@ -39,6 +39,9 @@ END
             UgffRkOn
             m8rfQBvl
 """
+import tracemalloc
+
+tracemalloc.start()
 
 
 def read_input_to_list(count):
@@ -57,6 +60,7 @@ def guests_arrived(line, arrived: set) -> set:
 
 
 def print_result(result):
+    print(len(result))
     for el in result:
         print(el)
 
@@ -67,5 +71,9 @@ reservation_list = read_input_to_list(number_of_guests)
 guests_at_party = guests_arrived(input(), set())
 guests_not_arrived = guests_at_party.symmetric_difference(reservation_list)
 
-print(len(guests_not_arrived))
 print_result(sorted(guests_not_arrived))
+
+print(tracemalloc.get_traced_memory())
+
+
+tracemalloc.stop()
