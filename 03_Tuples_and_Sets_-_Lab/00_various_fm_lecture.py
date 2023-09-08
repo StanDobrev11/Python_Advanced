@@ -71,6 +71,10 @@ class CustomSet:
     def __contains__(self, item):
         return self.contains(item)
 
+    def __len__(self):
+        return self.count
+
+
 
 ss = CustomSet()
 # ss.add('abc')
@@ -112,6 +116,10 @@ for x in values:
 # ss.remove('Pesho')
 # print(ss.values)
 # print(ss.contains('Pesho'))
+# print(54 in ss)
+# ss.remove(54)
+# print(54 in ss)
 print(54 in ss)
-ss.remove(54)
-print(54 in ss)
+print(len(ss))
+print(type(ss))
+print(ss)
