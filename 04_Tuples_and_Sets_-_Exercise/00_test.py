@@ -28,7 +28,6 @@ def fib(n):
 
 def rec_fib(n, memo):
     if n <= 2:
-
         return 1
 
     if n in memo:
@@ -38,6 +37,7 @@ def rec_fib(n, memo):
 
     return result
 
+
 #
 # start = time.perf_counter_ns()
 # print(fib(50))
@@ -46,3 +46,16 @@ def rec_fib(n, memo):
 # start = time.perf_counter_ns()
 print(rec_fib(7, {}))
 # print(time.perf_counter_ns() - start)
+print('2a'.isdigit())
+
+my_dict = {
+    'a': 1,
+    'b': 2,
+    'c': 3,
+    'd': 4,
+    'e': 5,
+}
+print(my_dict.get('t'))
+print(my_dict['e'])
+
+a: int = 5
