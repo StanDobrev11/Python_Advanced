@@ -67,7 +67,7 @@ def get_odd_even(data):
             even.add(number)
         else:
             odd.add(number)
-    return (even, odd)
+    return even, odd
 
 
 def compare_sum_of_values(even_set, odd_set):
@@ -90,3 +90,6 @@ list_of_numbers = sum_of_ascii_chr(set_of_names)
 even_set, odd_set = get_odd_even(list_of_numbers)
 result_set = compare_sum_of_values(even_set, odd_set)
 print_result(result_set)
+
+
+c

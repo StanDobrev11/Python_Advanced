@@ -32,9 +32,9 @@ Input           Output                                  Comment
 from collections import deque
 
 
-def split_input_by_dash(line):
+def split_input_by_dash(count):
     lines = []
-    for _ in range(number_of_lines):
+    for _ in range(count):
         line = input().split('-')
         lines.append(line)
     return lines
