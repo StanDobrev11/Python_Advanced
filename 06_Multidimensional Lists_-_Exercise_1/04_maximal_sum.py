@@ -38,31 +38,30 @@ def read_matrix():
     return [[int(x) for x in input().split(' ')] for _ in range(rows)]
 
 
-def find_sum(mtrx, row, col, size):
-    if row > len(mtrx) - size[0] + 1 or col > len(mtrx[row]) - size[1] + 1:
+def get_square_matrix_and_sum_of_elements(mtrx, row, col, size):
+    if row not in range(len(mtrx) - size + 1) or col not in range(len(mtrx[row]) - size + 1):
         return
+    current_mtrx = [[None] * size for _ in range(size)]
     current_sum = 0
-    current_mtrx = [[None] * size[1] for _ in range(size[0])]
     current_r = 0
-    for r in range(row, row + size[0]):
+    for r in range(row, row + size):
         current_c = 0
-        for c in range(col, col + size[1]):
-            current_sum += mtrx[r][c]
-            current_mtrx[current_r][current_c] = mtrx[r][c]
+        for c in range(col, col + size):
+            current_cell = mtrx[r][c]
+            current_mtrx[current_r][current_c] = current_cell
+            current_sum += current_cell
             current_c += 1
         current_r += 1
     return current_sum, current_mtrx
 
 
-def recurs_result_matrix(mtrx, results, row, col, size):
-    if row not in range(len(mtrx) - size[0] + 1) or col not in range(len(mtrx[0]) - size[1] + 1):
-        return
-    the_sum, the_mtrx = find_sum(mtrx, row, col, size)
-    if not results.get(the_sum):
-        results[the_sum] = the_mtrx
-    recurs_result_matrix(mtrx, results, row + 1, col, size)
-    recurs_result_matrix(mtrx, results, row, col + 1, size)
-    return results
+def get_sum_to_matrix_dictionary(mtrx, size):
+    sum_to_mtrx_dict = {}
+    for row in range(len(mtrx) - size + 1):
+        for col in range(len(mtrx[0]) - size + 1):
+            current_sum, current_matrix = get_square_matrix_and_sum_of_elements(matrix, row, col, SQUARE_SIZE)
+            sum_to_mtrx_dict[current_sum] = current_matrix
+    return sum_to_mtrx_dict
 
 
 def print_result(data):
@@ -73,12 +72,7 @@ def print_result(data):
         print(f'{" ".join(map(str, row))}')
 
 
+SQUARE_SIZE = 3
 matrix = read_matrix()
-
-trg_rows = 3
-trg_cols = 3
-sub_matrix_size = (trg_rows, trg_cols)
-result_values = {}
-
-result_values = recurs_result_matrix(matrix, result_values, 0, 0, sub_matrix_size)
-print_result(result_values)
+result_matrix_dictionary = get_sum_to_matrix_dictionary(matrix, SQUARE_SIZE)
+print_result(result_matrix_dictionary)
