@@ -33,17 +33,15 @@ def read_matrix():
 
 matrix = read_matrix()
 target_symbol = input()
-is_found = False
-result = tuple()
+result = None
 for row in matrix:
     if target_symbol in row:
         col = row.index(target_symbol)
         row = matrix.index(row)
         result = (row, col)
-        is_found = True
         break
 
-if is_found:
+if result:
     print(result)
 else:
     print(f'{target_symbol} does not occur in the matrix')

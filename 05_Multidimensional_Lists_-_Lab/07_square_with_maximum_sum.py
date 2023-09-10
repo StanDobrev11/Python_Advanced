@@ -36,19 +36,6 @@ def read_matrix():
     return matrix
 
 
-def recurs_find_sub_matrix_value(row, col, matrix, dict_values):
-    if row not in range(len(matrix) - 1) or col not in range(len(matrix[0]) - 1):
-        return
-    current_value = matrix[row][col] + matrix[row][col + 1] + matrix[row + 1][col] + matrix[row + 1][col + 1]
-    if current_value not in dict_values:
-        dict_values[current_value] = (
-            (matrix[row][col], matrix[row][col + 1]), (matrix[row + 1][col], matrix[row + 1][col + 1])
-        )
-    recurs_find_sub_matrix_value(row, col + 1, matrix, dict_values)
-    recurs_find_sub_matrix_value(row + 1, col, matrix, dict_values)
-    return dict_values
-
-
 def iter_find_sub_matrix_value(matrix, sub_matrix_values):
     for row in range(len(matrix) - 2):
         for col in range(len(matrix[0]) - 1):
@@ -61,14 +48,57 @@ def iter_find_sub_matrix_value(matrix, sub_matrix_values):
     return sub_matrix_values
 
 
+# def recurs_find_sub_matrix_value():
+#     if row not in range(len(matrix) - 1) or col not in range(len(matrix[0]) - 1):
+#         return
+#     current_value = matrix[row][col] + matrix[row][col + 1] + matrix[row + 1][col] + matrix[row + 1][col + 1]
+#     if current_value not in dict_values:
+#         dict_values[current_value] = (
+#             (matrix[row][col], matrix[row][col + 1]), (matrix[row + 1][col], matrix[row + 1][col + 1])
+#         )
+#     recurs_find_sub_matrix_value(row, col + 1, matrix, dict_values)
+#     recurs_find_sub_matrix_value(row + 1, col, matrix, dict_values)
+#     return dict_values
+
+
+def find_sum(mtrx, row, col, size):
+    if row > len(mtrx) - size[0] and col > len(row) - size[1]:
+        return
+    current_sum = 0
+    current_mtrx = [[None] * size[1] for _ in range(size[0])]
+    current_r = 0
+    for r in range(row, row + size[0]):
+        current_c = 0
+        for c in range(col, col + size[1]):
+            current_sum += mtrx[r][c]
+            current_mtrx[current_r][current_c] = mtrx[r][c]
+            current_c += 1
+        current_r += 1
+    return current_sum, current_mtrx
+
+
+def recurs_result_matrix(mtrx, results, row, col, size):
+    if row not in range(len(mtrx) - 1) or col not in range(len(mtrx[0]) - 1):
+        return
+    the_sum, the_mtrx = find_sum(mtrx, row, col, size)
+    if not results.get(the_sum):
+        results[the_sum] = the_mtrx
+    recurs_result_matrix(mtrx, results, row + 1, col, size)
+    recurs_result_matrix(mtrx, results, row, col + 1, size)
+    return results
+
+
 matrix = read_matrix()
 
-sub_matrix_values = {}
-# sub_matrix_values = recurs_find_sub_matrix_value(0, 0, matrix, sub_matrix_values)
-sub_matrix_values = iter_find_sub_matrix_value(matrix, sub_matrix_values)
+trg_rows = 2
+trg_cols = 2
+sub_matrix_size = (trg_rows, trg_cols)
+result_values = {}
 
-matrix_value = max(sub_matrix_values)
-top_matrix = sub_matrix_values[matrix_value]
+result_values = recurs_result_matrix(matrix, result_values, 0, 0, sub_matrix_size)
+
+matrix_value = max(result_values)
+top_matrix = result_values[matrix_value]
 
 for row in top_matrix:
     print(f'{" ".join(map(str, row))}')
