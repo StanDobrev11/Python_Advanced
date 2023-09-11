@@ -43,7 +43,7 @@ up right right right down
 * * * e
 * * c *
 * s * c
-* * * *
+* * c *
                             You collected all
                             coal! (2, 3)
 6
@@ -56,6 +56,16 @@ c * * * c *
 * * c * * *
                             3 pieces of coal left.
                             (5, 0)
+
+6
+left left down right up left left down down down
+* * * * * *
+e * * * c *
+* * c s * *
+* * * * * *
+c * * * c *
+* * c * * *
+
 """
 from collections import deque
 
@@ -109,6 +119,7 @@ def collect_coal(psn, mtrx, coal):
     cell = mtrx[row][col]
     if cell == 'c':
         coal += 1
+        mtrx[row][col] = '*'
         return True, coal
     elif cell == 'e':
         return False, coal
@@ -139,4 +150,4 @@ while commands:
         break
 if not is_over:
     row, col = position
-    print(f'3 pieces of coal left. ({row}, {col})')
+    print(f'{total_coals - coal_collected} pieces of coal left. ({row}, {col})')
