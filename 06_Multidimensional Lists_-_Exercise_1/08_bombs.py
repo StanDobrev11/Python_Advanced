@@ -53,6 +53,13 @@ Input           Output          Comments
                 4 1 0
                 0 -3 -8
                 3 -8 0
+
+5
+1 0 4 3 1 1
+1 3 1 3 0 4
+6 4 1 2 5 6
+2 2 1 5 4 1
+3 3 3 6 0 5
 """
 from collections import deque
 
@@ -85,24 +92,16 @@ def is_border_cell(mtrx, row, col):
 
 def detonate(bombs, mtrx):
     power, coordinates = get_bomb_power_coordinates(bombs, mtrx)
-    if power == 0:
+    if power <= 0:
         return
     row, col = coordinates
-    # TOD exclude exploded bombs
-
     if is_middle_cell(mtrx, row, col):
         detonate_middle(mtrx, power, coordinates)
 
     elif is_border_cell(mtrx, row, col):
         detonate_border(mtrx, power, coordinates)
-    # TOD algorithm for blowing corner matrix values
     else:
         detonate_corner(mtrx, power, coordinates)
-
-    # cell value becomes 0
-    mtrx[row][col] = 0
-    matrix_value, count = get_matrix_sum(mtrx)
-    print_matrix(mtrx, matrix_value, count)
 
 
 def detonate_middle(mtrx, power, coordinates):
@@ -110,23 +109,30 @@ def detonate_middle(mtrx, power, coordinates):
     row, col = top_left[0] - 1, top_left[1] - 1
     for r in range(row, row + 3):
         for c in range(col, col + 3):
-            mtrx[r][c] -= power
-    print('middle')
+            if mtrx[r][c] > 0:
+                mtrx[r][c] -= power
 
 
 def detonate_border(mtrx, power, coordinates):
     row, col = coordinates
+    rows = 2
+    cols = 2
     if row == 0:
-        col -= 1
+        row, col = (row, col - 1)
+        cols += 1
+    elif row == len(mtrx) - 1:
+        row, col = (row - 1, col - 1)
+        cols += 1
     elif col == 0:
-        row -= 1
-    else:
-        row -= 1
-        col -= 1
-    for r in range(row, row + 2):
-        for c in range(col, col + 2):
-            mtrx[r][c] -= power
-    print('border')
+        row, col = (row - 1, col)
+        rows += 1
+    elif col == len(mtrx) - 1:
+        row, col = (row - 1, col)
+        rows += 1
+    for r in range(row, row + rows):
+        for c in range(col, col + cols):
+            if mtrx[r][c] > 0:
+                mtrx[r][c] -= power
 
 
 def detonate_corner(mtrx, power, coordinates):
@@ -138,7 +144,11 @@ def detonate_corner(mtrx, power, coordinates):
         row -= 1
     elif col == len(mtrx[0]) - 1:
         col -= 1
-    print('corner')
+    for r in range(row, row + 2):
+        for c in range(col, col + 2):
+            if mtrx[r][c] > 0:
+                mtrx[r][c] -= power
+
 
 def get_bomb_power_coordinates(bombs, mtrx):
     next_bomb = bombs.popleft()
@@ -158,12 +168,6 @@ def get_matrix_sum(mtrx):
     return the_sum, count
 
 
-def mark_bombs(mtrx, bombs):
-    for bomb in bombs:
-        row, col = bomb
-        mtrx[row][col] = 0
-
-
 def print_matrix(mtrx, value, count):
     print(f'Alive cells: {count}')
     print(f'Sum: {value}')
@@ -172,10 +176,14 @@ def print_matrix(mtrx, value, count):
 
 
 matrix, size = read_matrix()
+
 bombs_list = read_bombs()
+# while not bombs_list == 'End':
 bombs = deque(bombs_list)
 for _ in range(len(bombs_list)):
     detonate(bombs, matrix)
 
-mark_bombs(matrix, bombs_list)
+matrix_value, count = get_matrix_sum(matrix)
+print_matrix(matrix, matrix_value, count)
 
+# bombs_list = read_bombs()
