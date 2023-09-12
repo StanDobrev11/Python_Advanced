@@ -35,7 +35,7 @@ KK
 0K0KKK00
 0K00KKKK
 00K0000K
-KKKKK00K
+KKKKKK0K
 K0K0000K
 KK00000K
 00K0K000
@@ -47,10 +47,7 @@ K0000K
 K000K0
 00K000
 K000K0
-
 """
-from collections import deque
-from time import sleep
 
 
 def read_board():
@@ -111,9 +108,6 @@ def reduce_tgt_squares(board, cur_row, cur_col):
             if board[r][c] > 0:
                 board[r][c] -= 1
                 board[cur_row][cur_col] -= 1
-    # print()
-    # print_board(board)
-    # print()
 
 
 def get_max_attacks_and_coordinates(board):
@@ -136,20 +130,20 @@ def transform_board(board):
                 board[row][col] = 0
                 increase_tgt_squares(board, row, col)
 
+
+def find_knights_count(board):
     knights_count = 0
-    # print_board(matrix)
     attack_coordinates = get_max_attacks_and_coordinates(board)
     while attack_coordinates:
         attack, (row, col) = attack_coordinates
         reduce_tgt_squares(board, row, col)
         knights_count += 1
-        # sleep(1)
         attack_coordinates = get_max_attacks_and_coordinates(board)
 
     return knights_count
 
 
 matrix = read_board()
-count = transform_board(matrix)
-# print_board(matrix)
+transform_board(matrix)
+count = find_knights_count(matrix)
 print(count)
