@@ -178,12 +178,9 @@ def print_matrix(mtrx, value, count):
 matrix, size = read_matrix()
 
 bombs_list = read_bombs()
-# while not bombs_list == 'End':
 bombs = deque(bombs_list)
 for _ in range(len(bombs_list)):
     detonate(bombs, matrix)
 
 matrix_value, count = get_matrix_sum(matrix)
 print_matrix(matrix, matrix_value, count)
-
-# bombs_list = read_bombs()
