@@ -129,7 +129,6 @@ def player_move(mtrx, cmd, psn):
         has_escaped = True
         return current_psn
     psn = row, col
-    # print_matrix(mtrx)
     return psn
 
 
@@ -153,12 +152,7 @@ def bunny_move(mtrx):
                 pop_young_bunnies(mtrx, row - 1, col)
                 pop_young_bunnies(mtrx, row, col + 1)
                 pop_young_bunnies(mtrx, row, col - 1)
-    # print()
-    # print_matrix(mtrx)
-    # print()
     update_matrix(mtrx)
-    # print_matrix(mtrx)
-    # print()
 
 
 def pop_young_bunnies(mtrx, row, col):
@@ -182,7 +176,6 @@ def update_matrix(mtrx):
 
 matrix = read_matrix()
 commands = deque(read_commands())
-# commands = deque(input())
 position = find_start_psn(matrix)
 has_escaped = False
 is_dead = False
@@ -192,7 +185,6 @@ while commands:
     bunny_move(matrix)
     if has_escaped or is_dead:
         break
-    # commands = deque(input())
 
 print_matrix(matrix)
 row, col = position

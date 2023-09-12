@@ -110,7 +110,7 @@ def reduce_tgt_squares(board, cur_row, cur_col):
                 board[cur_row][cur_col] -= 1
 
 
-def get_max_attacks_and_coordinates(board):
+def get_max_attack_and_coordinates(board):
     max_value = 0
     max_idx = ()
     for row in range(len(board)):
@@ -133,17 +133,15 @@ def transform_board(board):
 
 def find_knights_count(board):
     knights_count = 0
-    attack_coordinates = get_max_attacks_and_coordinates(board)
+    attack_coordinates = get_max_attack_and_coordinates(board)
     while attack_coordinates:
         attack, (row, col) = attack_coordinates
         reduce_tgt_squares(board, row, col)
         knights_count += 1
-        attack_coordinates = get_max_attacks_and_coordinates(board)
-
+        attack_coordinates = get_max_attack_and_coordinates(board)
     return knights_count
 
 
 matrix = read_board()
 transform_board(matrix)
-count = find_knights_count(matrix)
-print(count)
+print(find_knights_count(matrix))
