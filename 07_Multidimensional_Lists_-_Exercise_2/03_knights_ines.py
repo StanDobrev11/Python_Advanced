@@ -48,8 +48,7 @@ def find_max_attack(board):
 def remove_knight(board, removed):
     max_attack, max_coor = find_max_attack(board)
     if max_attack == 0:
-        print(removed)
-        return
+        return removed
     max_row, max_col = max_coor
     board[max_row][max_col] = '0'
     removed += 1
@@ -57,4 +56,4 @@ def remove_knight(board, removed):
 
 
 matrix = read_board()
-remove_knight(matrix, 0)
+print(remove_knight(matrix, 0))

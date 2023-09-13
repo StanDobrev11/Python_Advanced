@@ -23,9 +23,9 @@ Input       Output      Comment
 5
 1 3 7 9 11
 X 5 4 X 63
-7 3 21 95 1
-B 1 73 4 9
-9 2 33 2 0
+-170 3 21 95 1
+B -100 0 0 -100
+-100 2 33 2 0
             right
             [3, 1]
             [3, 2]
@@ -51,3 +51,67 @@ B 1 73 4 9
             [7, 2]
             113
 """
+
+
+def read_matrix():
+    rows = int(input())
+    return [[x if x.isalpha() else int(x) for x in input().split()] for _ in range(rows)]
+
+
+def find_start_psn(mtrx):
+    for idx, r in enumerate(mtrx):
+        if 'B' in r:
+            c = r.index('B')
+            r = idx
+            return r, c
+
+
+def find_best_sum(direction, mtrx, r, c, max_sum, coor_list, value_to_coor):
+    if r not in range(len(mtrx)) or c not in range(len(mtrx)) or mtrx[r][c] == 'X':
+        coor_list.append(max_sum)
+        value_to_coor[direction] = coor_list
+        return value_to_coor
+    max_sum += mtrx[r][c]
+    coor_list.append([r, c])
+    if direction == 'right':
+        c += 1
+    elif direction == 'left':
+        c -= 1
+    elif direction == 'up':
+        r -= 1
+    elif direction == 'down':
+        r += 1
+    return find_best_sum(direction, mtrx, r, c, max_sum, coor_list, value_to_coor)
+
+
+def print_result(result):
+    key = find_max(result)
+    value = result[key].pop()
+    print(key)
+    for coordinates in result[key]:
+        print(coordinates)
+    print(value)
+
+
+def find_max(result):
+    max_value = -float('inf')
+    max_key = ''
+    for key, values in result.items():
+        if len(values) == 1:
+            continue
+        value = values[-1]
+        if value > max_value:
+            max_value = value
+            max_key = key
+    return max_key
+
+
+matrix = read_matrix()
+row, col = find_start_psn(matrix)
+
+value_to_coordinates = {}
+right = find_best_sum('right', matrix, row, col + 1, 0, [], value_to_coordinates)
+left = find_best_sum('left', matrix, row, col - 1, 0, [], value_to_coordinates)
+up = find_best_sum('up', matrix, row - 1, col, 0, [], value_to_coordinates)
+down = find_best_sum('down', matrix, row + 1, col, 0, [], value_to_coordinates)
+print_result(value_to_coordinates)
