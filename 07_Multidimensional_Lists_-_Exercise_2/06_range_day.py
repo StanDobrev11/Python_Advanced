@@ -58,12 +58,13 @@ shoot right
                     Training completed! All 2 targets hit.
                     [4, 1]
                     [2, 2]
+
+x . . . .
 . . . . .
 . . . . .
-. . x . .
 . . . . .
-. x . . A
-3
+. . . . A
+100
 shoot down
 move right 2
 shoot left
@@ -71,3 +72,160 @@ shoot left
                     [4, 1]
 
 """
+
+
+# def move(mtrx, path, footsteps, cur_r, cur_c):
+#     original_r, original_c = cur_r, cur_c
+#     if in_range(mtrx, footsteps, path, cur_r, cur_c):
+#         is_ok = True
+#         for step in range(footsteps):
+#             r, c = get_next_position(path, cur_r, cur_c)
+#             if not_obstructed(mtrx, r, c):
+#                 cur_r, cur_c = r, c
+#             else:
+#                 is_ok = False
+#                 break
+#         if is_ok:
+#             mtrx[original_r][original_c], mtrx[cur_r][cur_c] = mtrx[cur_r][cur_c], mtrx[original_r][original_c]
+#             original_r, original_c = cur_r, cur_c
+#     print_matrix(mtrx)
+#     return original_r, original_c
+# def get_final_move_psn(path, footsteps, r, c):
+#     if path == 'right':
+#         c += footsteps
+#     elif path == 'left':
+#         c -= footsteps
+#     elif path == 'up':
+#         r -= footsteps
+#     elif path == 'down':
+#         r += footsteps
+#
+#     return r, c
+#
+#
+# def move(mtrx, path, footsteps, cur_r, cur_c):
+#     """
+#     This function returns directly the player to the final position if not obstructed. Works together with
+#     get final move psn function
+#     """
+#     if in_range(mtrx, footsteps, path, cur_r, cur_c):
+#         r, c = get_final_move_psn(path, footsteps, cur_r, cur_c)
+#         if mtrx[r][c] == '.':
+#             mtrx[cur_r][cur_c], mtrx[r][c] = mtrx[r][c], mtrx[cur_r][cur_c]
+#             cur_r, cur_c = r, c
+#     print_matrix(mtrx)
+#     return cur_r, cur_c
+
+def read_matrix():
+    rows = 5
+    return [[x for x in input().split()] for _ in range(rows)]
+
+
+def print_matrix(mtrx):
+    for r in mtrx:
+        print(' '.join(str(x) for x in r))
+
+
+def find_start_psn(mtrx):
+    for idx, r in enumerate(mtrx):
+        if 'A' in r:
+            c = r.index('A')
+            r = idx
+            return r, c
+
+
+def get_next_position(path, r, c):
+    if path == 'right':
+        c += 1
+    elif path == 'left':
+        c -= 1
+    elif path == 'up':
+        r -= 1
+    elif path == 'down':
+        r += 1
+    return r, c
+
+
+def in_boundary(mtrx, r, c):
+    if r not in range(len(mtrx)) or c not in range(len(mtrx)):
+        return False
+    return True
+
+
+def not_obstructed(mtrx, r, c):
+    if mtrx[r][c] == '.':
+        return True
+    return False
+
+
+def in_range(mtrx, footsteps, path, r, c):
+    if path == 'right':
+        c += footsteps
+    elif path == 'left':
+        c -= footsteps
+    elif path == 'up':
+        r -= footsteps
+    elif path == 'down':
+        r += footsteps
+
+    if in_boundary(mtrx, r, c):
+        return True
+    return False
+
+
+def move(mtrx, path, footsteps, cur_r, cur_c):
+    if in_range(mtrx, footsteps, path, cur_r, cur_c):
+        for step in range(footsteps):
+            r, c = get_next_position(path, cur_r, cur_c)
+            if not_obstructed(mtrx, r, c):
+                mtrx[cur_r][cur_c], mtrx[r][c] = mtrx[r][c], mtrx[cur_r][cur_c]
+                cur_r, cur_c = r, c
+    return cur_r, cur_c
+
+
+def shoot(mtrx, path, cur_r, cur_c, tgts_shot, tgts_coordinates):
+    shot_distance = 4
+    for shot in range(1, shot_distance + 1):
+        tgt_r, tgt_c = get_next_position(path, cur_r, cur_c)
+        if in_boundary(mtrx, tgt_r, tgt_c):
+            if not_obstructed(mtrx, tgt_r, tgt_c):
+                cur_r, cur_c = tgt_r, tgt_c
+                continue
+            mtrx[tgt_r][tgt_c] = '.'
+            tgts_shot += 1
+            tgts_coordinates.append([tgt_r, tgt_c])
+            break
+    return tgts_shot, tgts_coordinates
+
+
+def get_targets(mtrx):
+    tgt_count = 0
+    for r in mtrx:
+        tgt_count += r.count('x')
+    return tgt_count
+
+
+matrix = read_matrix()
+row, col = find_start_psn(matrix)
+initial_targets = get_targets(matrix)
+targets_shot = 0
+target_coordinates = []
+commands = int(input())
+for _ in range(commands):
+    command, *rest = input().split()
+    if command == 'move':
+        direction, steps = rest
+        row, col = move(matrix, direction, int(steps), row, col)
+    elif command == 'shoot':
+        direction = rest[0]
+        targets_shot, target_coordinates = shoot(matrix, direction, row, col, targets_shot, target_coordinates)
+    print_matrix(matrix)
+    if targets_shot >= initial_targets:
+        print(f"Training completed! All {targets_shot} targets hit.")
+        break
+
+if targets_shot < initial_targets:
+    print(f"Training not completed! {initial_targets - targets_shot} targets left.")
+
+for lst in target_coordinates:
+    print(lst)
