@@ -77,48 +77,6 @@ shoot down
 """
 
 
-# def move(mtrx, path, footsteps, cur_r, cur_c):
-#     original_r, original_c = cur_r, cur_c
-#     if in_range(mtrx, footsteps, path, cur_r, cur_c):
-#         is_ok = True
-#         for step in range(footsteps):
-#             r, c = get_next_position(path, cur_r, cur_c)
-#             if not_obstructed(mtrx, r, c):
-#                 cur_r, cur_c = r, c
-#             else:
-#                 is_ok = False
-#                 break
-#         if is_ok:
-#             mtrx[original_r][original_c], mtrx[cur_r][cur_c] = mtrx[cur_r][cur_c], mtrx[original_r][original_c]
-#             original_r, original_c = cur_r, cur_c
-#     print_matrix(mtrx)
-#     return original_r, original_c
-# def get_final_move_psn(path, footsteps, r, c):
-#     if path == 'right':
-#         c += footsteps
-#     elif path == 'left':
-#         c -= footsteps
-#     elif path == 'up':
-#         r -= footsteps
-#     elif path == 'down':
-#         r += footsteps
-#
-#     return r, c
-#
-#
-# def move(mtrx, path, footsteps, cur_r, cur_c):
-#     """
-#     This function returns directly the player to the final position if not obstructed. Works together with
-#     get final move psn function
-#     """
-#     if in_range(mtrx, footsteps, path, cur_r, cur_c):
-#         r, c = get_final_move_psn(path, footsteps, cur_r, cur_c)
-#         if mtrx[r][c] == '.':
-#             mtrx[cur_r][cur_c], mtrx[r][c] = mtrx[r][c], mtrx[cur_r][cur_c]
-#             cur_r, cur_c = r, c
-#     print_matrix(mtrx)
-#     return cur_r, cur_c
-
 def read_matrix():
     rows = 5
     return [[x for x in input().split()] for _ in range(rows)]
