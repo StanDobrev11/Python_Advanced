@@ -65,11 +65,11 @@ Christmas morning
                                             reached 2, and we don't have any nice
                                             kids without presents left. So we print the
                                             appropriate message.
-3
+0
 4
 - - - -
 V - X -
-- V C V
+- X C -
 - - - S
 left
 up
@@ -170,6 +170,21 @@ def eat_cookies(mtrx, cur_r, cur_c, presents):
     return presents
 
 
+def print_result():
+    nice_kids_left = get_nice_kids(matrix)
+    if nice_kids_left > 0:
+        if presents_count <= 0:
+            print("Santa ran out of presents!")
+            print_matrix(matrix)
+            print(f"No presents for {nice_kids_left} nice kid/s.")
+        else:
+            print_matrix(matrix)
+            print(f"No presents for {nice_kids_left} nice kid/s.")
+    else:
+        print_matrix(matrix)
+        print(f"Good job, Santa! {nice_kids} happy nice kid/s.")
+
+
 presents_count = int(input())
 matrix = read_matrix()
 row, col = find_start_psn(matrix)
@@ -177,17 +192,7 @@ nice_kids = get_nice_kids(matrix)
 command = input()
 while command != "Christmas morning":
     (row, col), presents_count = move(matrix, command, row, col, presents_count)
-    # print_matrix(matrix)
-    # print(presents_count)
     if presents_count <= 0:
         break
     command = input()
-
-if presents_count <= 0:
-    print("Santa ran out of presents!")
-print_matrix(matrix)
-nice_kids_left = get_nice_kids(matrix)
-if nice_kids_left > 0:
-    print(f"No presents for {nice_kids_left} nice kid/s.")
-else:
-    print(f"Good job, Santa! {nice_kids} happy nice kid/s.")
+print_result()
