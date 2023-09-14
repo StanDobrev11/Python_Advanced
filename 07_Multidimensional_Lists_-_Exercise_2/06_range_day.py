@@ -59,15 +59,18 @@ shoot right
                     [4, 1]
                     [2, 2]
 
-x . . . .
+. . x . .
 . . . . .
+x . A . x
 . . . . .
-. . . . .
-. . . . A
-100
-shoot down
-move right 2
+. . x . .
+5
+move left 1
 shoot left
+shoot right
+shoot up
+shoot down
+
                     Training not completed! 1 targets left.
                     [4, 1]
 
