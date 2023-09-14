@@ -183,18 +183,11 @@ while command != "Christmas morning":
         break
     command = input()
 
-nice_kids_left = get_nice_kids(matrix)
-
-if nice_kids_left > presents_count:
+if presents_count <= 0:
     print("Santa ran out of presents!")
-    print_matrix(matrix)
-    print(f"No presents for {nice_kids_left} nice kid/s.")
-
 print_matrix(matrix)
-print(f"Good job, Santa! {nice_kids} happy nice kid/s.")
-
-# if presents_count <= 0 < nice_kids_left:
-#     print("Santa ran out of presents!")
-#     print_matrix(matrix)
-#     print(f"No presents for {nice_kids_left} nice kid/s.")
-# else:
+nice_kids_left = get_nice_kids(matrix)
+if nice_kids_left > 0:
+    print(f"No presents for {nice_kids_left} nice kid/s.")
+else:
+    print(f"Good job, Santa! {nice_kids} happy nice kid/s.")
