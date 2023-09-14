@@ -153,12 +153,12 @@ def take_a_step(mtrx, r, c, presents):
 
 
 def eat_cookies(mtrx, cur_r, cur_c, presents):
-    houses_to_check = [
+    houses_to_check = {
         (cur_r, cur_c - 1),
         (cur_r, cur_c + 1),
         (cur_r - 1, cur_c),
         (cur_r + 1, cur_c),
-    ]
+    }
     for house in houses_to_check:
         r, c = house
         if in_boundary(mtrx, r, c):
