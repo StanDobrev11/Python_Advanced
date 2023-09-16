@@ -35,11 +35,13 @@ def rectangle(*args):
     def perimeter():
         return reduce(lambda x, y: (2 * x) + (2 * y), args)
 
-    result = []
+    # result = []
     if is_integer(0):
-        result.append(f'Rectangle area: {area()}')
-        result.append(f'Rectangle perimeter: {perimeter()}')
-        return "\n".join(result)
+        # result.append(f'Rectangle area: {area()}')
+        # result.append(f'Rectangle perimeter: {perimeter()}')
+        # return "\n".join(result)
+        return (f'Rectangle area: {area()}\n'
+                f'Rectangle perimeter: {perimeter()}')
     else:
         return "Enter valid values!"
 
