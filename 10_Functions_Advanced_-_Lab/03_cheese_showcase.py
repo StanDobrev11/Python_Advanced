@@ -47,12 +47,16 @@ Brie=[150, 125])
 
 
 def sorting_cheeses(**kwargs):
-    for key, value in kwargs.items():
-        kwargs[key] = sorted(value, reverse=True)
-    return [f"{k}" for k in sorted(kwargs)]
+    kwargs = sorted(kwargs.items(), key=lambda x: (-len(x[1]), x[0]))
+
+    result = []
+    for key, values in kwargs:
+        result.append(key)
+        for value in sorted(values, reverse=True):
+            result.append(value)
+
+    return "\n".join(map(str, result))
 
 
-#
-# print(sorting_cheeses(Parmesan=[102, 120, 135], Camembert=[100, 100, 105, 500, 430], Mozzarella=[50, 125]))
-
-print(isinstance('-1', int))
+print(sorting_cheeses(Parmesan=[102, 120, 135], Camembert=[100, 100, 105, 500, 430], Mozzarella=[50, 125]))
+# print(sorting_cheeses(Parmigiano=[165, 215], Feta=[150, 515], Brie=[150, 125]))
