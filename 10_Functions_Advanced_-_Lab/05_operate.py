@@ -40,9 +40,12 @@ mapper = {
     '-': lambda x, y: x - y,
     '*': lambda x, y: x * y,
     '/': lambda x, y: x / y,
+    '>': lambda x, y: x if x > y else y,
 }
 
 print(operate("+", 1, 2, 3))
+print(operate(">", 1, 2, 3))
 print(operate("*", 3, 4))
 print(operate("/", 20, 5))
 print(operate("-", 3, 4))
+
