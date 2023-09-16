@@ -21,27 +21,24 @@ print(rectangle('2', 10))
 from functools import reduce
 
 
-def is_integer(idx, args):
-    if idx >= len(args):
-        return True
-    if not isinstance(args[idx], int):
-        return False
-    return is_integer(idx + 1, args)
-
-
-def area(args):
-    return reduce(lambda x, y: x * y, args)
-
-
-def perimeter(args):
-    return reduce(lambda x, y: (2 * x) + (2 * y), args)
-
-
 def rectangle(*args):
+    def is_integer(idx):
+        if idx >= len(args):
+            return True
+        if not isinstance(args[idx], int):
+            return False
+        return is_integer(idx + 1)
+
+    def area():
+        return reduce(lambda x, y: x * y, args)
+
+    def perimeter():
+        return reduce(lambda x, y: (2 * x) + (2 * y), args)
+
     result = []
-    if is_integer(0, args):
-        result.append(f'Rectangle area: {area(args)}')
-        result.append(f'Rectangle perimeter: {perimeter(args)}')
+    if is_integer(0):
+        result.append(f'Rectangle area: {area()}')
+        result.append(f'Rectangle perimeter: {perimeter()}')
         return "\n".join(result)
     else:
         return "Enter valid values!"
