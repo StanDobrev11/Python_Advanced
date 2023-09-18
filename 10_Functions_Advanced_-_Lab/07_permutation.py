@@ -13,8 +13,15 @@ abc
 """
 
 
-def char_combinations(char):
-    pass
+def permute(text, current_idx=0):
+    if current_idx >= len(text):
+        print(''.join(text))
+        return
+    for idx in range(current_idx, len(text)):
+        text[current_idx], text[idx] = text[idx], text[current_idx]
+        permute(text, current_idx + 1)
+        text[current_idx], text[idx] = text[idx], text[current_idx]
 
 
-print(char_combinations('abc'))
+text = list('1234')
+permute(text)
