@@ -17,19 +17,23 @@ C="P", s="", java='Java'))
 
 
 def concatenate(*args, **kwargs):
-    result_str = ''
-    for string in args:
-        result_str += string
+    # result_str = ''
+    # for string in args:
+    #     result_str += string
+    result_str = ''.join(args)
 
-    for key in kwargs:
-        while key in result_str:
-            idx = result_str.index(key)
-            length = len(key)
-            result_str = result_str[:idx] + kwargs[key] + result_str[idx + length:]
+    for key, value in kwargs.items():
+        result_str = result_str.replace(key, value)
+    # for key in kwargs:
+        # while key in result_str:
+        #     idx = result_str.index(key)
+        #     length = len(key)
+        #     result_str = result_str[:idx] + kwargs[key] + result_str[idx + length:]
+
     return result_str
 
 
 print(concatenate("Soft", "UNI", "Is", "Grate", "!",
                   UNI="Uni", Grate="Great"))
 print(concatenate("I", " ", "Love", " ", "Cythons",
-C="P", s="", java='Java'))
+                  C="P", s="", java='Java'))
