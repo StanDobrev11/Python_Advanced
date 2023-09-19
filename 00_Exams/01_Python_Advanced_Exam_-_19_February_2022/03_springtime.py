@@ -21,29 +21,20 @@ Note: Submit only the function in the judge system
 
 
 def start_spring(**kwargs):
-    value_count = {}
+    result_dict = {}
     for key, value in kwargs.items():
-        if value not in value_count:
-            value_count[value] = 0
-        value_count[value] += 1
-    result = {}
-    value_count = dict(sorted(value_count.items(), key=lambda x: -x[1]))
-    for type_ in value_count.keys():
-        if type_ not in result:
-            result[type_] = []
-        for key, value in kwargs.items():
-            if type_ == value:
-                result[type_].append(key)
+        if value not in result_dict:
+            result_dict[value] = []
+        result_dict[value].append(key)
 
-    resss = []
-    for key, values in sorted(result.items(), key=lambda x: (-len(x[1]), x[0])):
+    result_list = []
+    for key, values in sorted(result_dict.items(), key=lambda x: (-len(x[1]), x[0])):
         word = key + ':'
-        resss.append(word)
+        result_list.append(word)
         for value in sorted(values):
             word = '-' + value
-            resss.append(word)
-
-    return '\n'.join(resss)
+            result_list.append(word)
+    return '\n'.join(result_list)
 
 
 example_objects = {"Water Lilly": "flower",
