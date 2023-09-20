@@ -52,7 +52,7 @@ def place_mines(field):
     mines = int(input())
     mine_list = []
     for _ in range(mines):
-        mine = tuple(int(x) for x in input() if x.isdigit())
+        mine = eval(input())
         r, c = mine
         if is_valid(r) and is_valid(c):
             mine_list.append(mine)
