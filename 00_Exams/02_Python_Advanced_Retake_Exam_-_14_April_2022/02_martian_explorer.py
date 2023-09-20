@@ -120,6 +120,7 @@ def execute_command(cmds, cur_psn, mtrx, items):
         next_row = 6 - abs(next_row)
     if next_col not in range(len(mtrx[0])):
         next_col = 6 - abs(next_col)
+
     next_psn = next_row, next_col
 
     items = check_position(next_psn, mtrx, items)
