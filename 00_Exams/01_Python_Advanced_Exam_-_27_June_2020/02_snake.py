@@ -84,7 +84,7 @@ def get_commands():
 
 
 def find_burrows(mtrx):
-    for idx, r in enumerate(board):
+    for idx, r in enumerate(mtrx):
         if 'B' in r:
             c = r.index('B')
             r = idx
