@@ -27,13 +27,16 @@ print(numbers_searching(50, 50, 47, 47, 48, 45, 49,
 
 
 def numbers_searching(*args):
-    nums = sorted(list(set(x for x in args if args.count(x) > 1)))
-    result = []
+    nums = sorted(list(args))
+    missing_nums = []
     for num in range(nums[0], nums[-1]):
-        if num not in nums and num not in args:
-            result.append(num)
-    result.append(nums)
-
+        if num not in nums:
+            missing_nums.append(num)
+    nums = sorted(list(set(x for x in nums if nums.count(x) > 1)))
+    if missing_nums:
+        result = [missing_nums.pop()] + [nums]
+    else:
+        result = nums
     return result
 
 
