@@ -39,6 +39,14 @@ Q . . . Q . . .
 . . . . . . Q .
 . . . Q . . . .
                     The king is safe!
+Q . . . . . Q .
+. . . . . . . .
+. . . . . . . .
+. . . K . . . .
+. . . . . . . .
+. . . . . . . .
+Q . . . . . . .
+. . . . . . . Q
 """
 
 
@@ -123,8 +131,8 @@ def check_attacks(brd, psn, result):
         # check top
         for row in range(r - 1, -1, -1):
             is_found = False
-            for col in range(c - 1, -1, -1):
-                if row - col == diag_value and brd[row][col] == 'Q':
+            for col in range(c + 1, 8):
+                if row + col == diag_value and brd[row][col] == 'Q':
                     result.add((row, col))
                     is_found = True
                     break
@@ -133,8 +141,8 @@ def check_attacks(brd, psn, result):
         # check bottom
         for row in range(r + 1, 8):
             is_found = False
-            for col in range(c + 1, 8):
-                if row - col == diag_value and brd[row][col] == 'Q':
+            for col in range(c - 1, -1, -1):
+                if row + col == diag_value and brd[row][col] == 'Q':
                     result.add((row, col))
                     is_found = True
                     break
