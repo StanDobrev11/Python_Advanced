@@ -1,0 +1,7 @@
+io module - used to handle files. default library in python
+.read() method returns the file content as string
+.readline() return content till num of symbols indicated
+.readlines() return list with the content
+1
+2
+3
