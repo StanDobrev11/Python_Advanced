@@ -47,3 +47,5 @@ import os
 # file.close()
 
 # print(os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'api.env')))
+
+txt = ['-I', 'was', 'quick', 'to', 'judge', 'him,', 'but', 'it', "wasn't", 'his', 'fault.\n-Is', 'this', 'some', 'kind', 'of', 'joke?!', 'Is', 'it?\n-Quick,', 'hide', 'here…It', 'is', 'safer.\n']
