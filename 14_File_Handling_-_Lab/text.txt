@@ -1,7 +1,8 @@
 io module - used to handle files. default library in python
-.read() method returns the file content as string
+.read() method returns the file content as string. You can say bytes
 .readline() return content till num of symbols indicated
 .readlines() return list with the content
+.seek() - returns cursor fm the beginning
 1
 2
 3
