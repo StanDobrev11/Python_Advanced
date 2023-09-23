@@ -100,7 +100,6 @@ try:
 
     result = '\n'.join(f'{word} - {count}' for word, count in sorted(result.items(), key=lambda x: -x[1])) + '\n'
 
-
     write_to_file(output_file, result)
     print_file(output_file)
 except AttributeError:
