@@ -47,5 +47,9 @@ import os
 # file.close()
 
 # print(os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'api.env')))
-
+wrds = ['quick', 'is', 'fault']
 txt = ['-I', 'was', 'quick', 'to', 'judge', 'him,', 'but', 'it', "wasn't", 'his', 'fault.\n-Is', 'this', 'some', 'kind', 'of', 'joke?!', 'Is', 'it?\n-Quick,', 'hide', 'here…It', 'is', 'safer.\n']
+txt3 = ["-I was quick to judge him, but it wasn't his fault."
+        "-Is this some kind of joke?! Is it?"
+        "-Quick, hide here…It is safer."]
+print(txt3.count('was'))

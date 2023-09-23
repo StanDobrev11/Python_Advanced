@@ -13,6 +13,7 @@ quick is fault
                                         fault - 1
 """
 import os.path
+import re
 
 
 def get_file_path(filename):
@@ -40,8 +41,7 @@ def delete_file(filename):
 def get_text_as_list(filename):
     try:
         with open(get_file_path(filename), 'r') as f:
-            text = f.read().split(' ')
-            return text
+            return f.read()
     except FileNotFoundError:
         print('FileNotFound')
 
@@ -49,7 +49,7 @@ def get_text_as_list(filename):
 def read_file(filename):
     try:
         with open(get_file_path(filename), 'r') as f:
-            print(f.read())
+            return f.read()
     except FileNotFoundError:
         print('FileNotFound')
 
@@ -62,28 +62,46 @@ def write_to_file(filename, text):
         print('FileNotFound')
 
 
-# delete_file('words.txt')
-# delete_file('input.txt')
-delete_file('output.txt')
+def print_file(filename):
+    try:
+        with open(get_file_path(filename)) as f:
+            print(f.read())
+    except FileNotFoundError:
+        print('FileNotFound')
 
 
-# create_file('words.txt', 'quick is fault')
+words_file = 'words.txt'
+text_file = 'input.txt'
+output_file = 'output.txt'
+# delete_file(words_file)
+# delete_file(text_file)
+# delete_file(output_file)
 
+# create_file(words_file, 'quick is fault')
+#
 # create_file(
-#     'input.txt',
+#     text_file,
 #     """-I was quick to judge him, but it wasn't his fault.
 # -Is this some kind of joke?! Is it?
 # -Quick, hide here…It is safer.
 # """
 # )
 
-target_words = get_text_as_list('words.txt')
-target_text = get_text_as_list('input.txt')
+try:
+    target_words = get_text_as_list(words_file).split()
+    target_text = get_text_as_list(text_file)
 
-create_file('output.txt', '')
-for word in target_words:
-    count = target_text.count(word)
-    write_to_file('output.txt', f'{word} - {count}\n')
+    create_file(output_file, '')
+    result = {}
+    for word in target_words:
+        word_regex = fr'[\s\W]({word})[\s\W]'
+        count = len(re.findall(word_regex, target_text, re.IGNORECASE))
+        result[word] = count
 
-read_file('output.txt')
+    result = '\n'.join(f'{word} - {count}' for word, count in sorted(result.items(), key=lambda x: -x[1])) + '\n'
 
+
+    write_to_file(output_file, result)
+    print_file(output_file)
+except AttributeError:
+    print('AttributeError')
