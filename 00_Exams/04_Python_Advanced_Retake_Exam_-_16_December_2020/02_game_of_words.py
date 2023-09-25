@@ -44,7 +44,7 @@ right
                                                 moves to [1;0], where he consumes 'M', and then all
                                                 letters on the right. Оur string is "HelloMark" and
                                                 the player is on index [1;3].
-                                                Initial
+Initial
 5
 ‐‐‐‐‐
 t‐r‐‐
@@ -68,3 +68,65 @@ left
                                                 out of the matrix once, so he loses the last character
                                                 of his string – 't'.
 """
+
+
+def read_matrix():
+    rows = int(input())
+    return [[x for x in list(input())] for _ in range(rows)]
+
+
+def print_(mtrx):
+    for r in mtrx:
+        print(''.join(str(x) for x in r))
+
+
+def start_psn(mtrx):
+    for idx, r in enumerate(mtrx):
+        if 'P' in r:
+            c = r.index('P')
+            r = idx
+            return r, c
+
+
+def is_valid(mtrx, next_psn):
+    r, c = next_psn
+    if r not in range(len(mtrx)) or c not in range(len(mtrx)):
+        return False
+    return True
+
+
+# TODO adjust for collection letters and concatenate string
+# TODO punish the player if not valid
+def move_player(cmd, mtrx, cur_row, cur_col, text):
+
+    move_mapper = {
+        'left': (cur_row, cur_col - 1),
+        'right': (cur_row, cur_col + 1),
+        'up': (cur_row - 1, cur_col),
+        'down': (cur_row + 1, cur_col),
+    }
+
+    if not is_valid(mtrx, move_mapper[cmd]):
+        text = text[:-1]
+        return cur_row, cur_col, text
+
+    next_r, next_c = move_mapper[cmd]
+    if mtrx[next_r][next_c].isalpha():
+        text += mtrx[next_r][next_c]
+
+    mtrx[next_r][next_c] = 'P'
+    mtrx[cur_row][cur_col] = '-'
+
+    return next_r, next_c, text
+
+
+string = input()
+matrix = read_matrix()
+row, col = start_psn(matrix)
+commands_count = int(input())
+
+for _ in range(commands_count):
+    command = input()
+    row, col, string = move_player(command, matrix, row, col, string)
+print(string)
+print_(matrix)

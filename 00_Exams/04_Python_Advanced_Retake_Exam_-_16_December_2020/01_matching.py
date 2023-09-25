@@ -43,6 +43,9 @@ Input                   Output                      Comment
                         Matches: 4
                         Males left: none
                         Females left: 15, 13, 4
+
+3 0 3 6 9 25 27
+12 25 6 1 2 3 15 13 4
 """
 from collections import deque
 
@@ -57,6 +60,7 @@ def is_25_dividable(value):
     if value % 25 == 0:
         return True
     return False
+
 
 males = [int(x) for x in input().split()]
 females = deque(int(x) for x in input().split())
@@ -73,7 +77,7 @@ while True:
                 males.pop()
                 current_male = males.pop()
 
-        while is_zero_negative(current_female):
+        while is_zero_negative(current_female) or is_25_dividable(current_female):
             if is_zero_negative(current_female):
                 current_female = females.popleft()
             elif is_25_dividable(current_female):
