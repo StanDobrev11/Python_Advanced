@@ -1,0 +1,12 @@
+.csv
+- - - out.csv
+.html
+- - - aas.html
+- - - kkak.html
+.js
+- - - test.js
+.txt
+- - - 01_text.txt
+- - - 02_output.txt
+- - - 02_text.txt
+- - - test.txt
