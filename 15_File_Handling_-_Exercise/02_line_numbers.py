@@ -16,22 +16,24 @@ it?
                                     (22)(4)
 """
 import re
+from string import punctuation
 
 file_ = 'txt_files/02_text.txt'
 
-regex = r'[-\?\!\,\.\']'
 with open(file_) as file:
     line_count = 1
+
     for line in file:
-        original_line = line
-        line = ''.join(line.split())
-        length = len(line)
-        regex_line = re.sub(regex, '', line)
-        ch_count = len(regex_line)
-        symbol_count = length - ch_count
+        letters, symbols = 0, 0
+        for symbol in line:
+            if symbol.isalpha():
+                letters += 1
+            elif symbol in punctuation:
+                symbols += 1
+
         with open('txt_files/02_output.txt', 'a') as file_out:
-            file_out.write(f"Line {line_count}: {original_line.strip()} ({ch_count})({symbol_count})\n")
-        # print(f"Line {line_count}: {original_line.strip()} ({ch_count})({symbol_count})")
+            file_out.write(f"Line {line_count}: {line.strip()} ({letters})({symbols})\n")
+
         line_count += 1
 
 with open('txt_files/02_output.txt') as file_out:

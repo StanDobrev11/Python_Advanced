@@ -56,5 +56,4 @@ def func_executor(*funcs):
 #     return '\n'.join(result)
 
 
-print(func_executor((sum_numbers, (1, 2)), (multiply_numbers, (2, 4))
-                    ))
+print(func_executor((sum_numbers, (1, 2)), (multiply_numbers, (2, 4))))
