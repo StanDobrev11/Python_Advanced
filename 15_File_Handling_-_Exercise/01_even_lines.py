@@ -12,7 +12,6 @@ wasn't his fault.
                                         safer@ is It here@ hide @Quick@
 """
 
-import os.path
 import re
 
 file_ = 'txt_files/01_text.txt'
