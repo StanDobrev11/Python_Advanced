@@ -44,3 +44,55 @@ Input                   Output                      Comment
                         Males left: none
                         Females left: 15, 13, 4
 """
+from collections import deque
+
+
+def is_zero_negative(value):
+    if value <= 0:
+        return True
+    return False
+
+
+def is_25_dividable(value):
+    if value % 25 == 0:
+        return True
+    return False
+
+males = [int(x) for x in input().split()]
+females = deque(int(x) for x in input().split())
+
+matched = 0
+current_male = males.pop()
+current_female = females.popleft()
+while True:
+    try:
+        while is_zero_negative(current_male) or is_25_dividable(current_male):
+            if is_zero_negative(current_male):
+                current_male = males.pop()
+            elif is_25_dividable(current_male):
+                males.pop()
+                current_male = males.pop()
+
+        while is_zero_negative(current_female):
+            if is_zero_negative(current_female):
+                current_female = females.popleft()
+            elif is_25_dividable(current_female):
+                females.popleft()
+                current_female = females.popleft()
+    except IndexError:
+        break
+
+    if current_male == current_female:
+        matched += 1
+        current_male, current_female = 0, 0
+    else:
+        current_male -= 2
+        current_female = 0
+
+print(f'Matches: {matched}')
+if current_male > 0:
+    males.append(current_male)
+    males.reverse()
+
+print(f'Males left: {", ".join(str(x) for x in males) if males else "none"}')
+print(f'Females left: {", ".join(map(str, females)) if females else "none"}')
