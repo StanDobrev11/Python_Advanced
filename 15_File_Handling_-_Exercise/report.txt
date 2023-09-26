@@ -1,7 +1,35 @@
-TXT_FILES
-- - - .csv
-- - - .html
-- - - .js
-- - - .txt
+
+txt
+- - - test.txt
+
+txt
+- - - report.txt
+- - - test.txt
+
+DIR
 - - - ANTHR_LVL
 - - - DIRECTORY
+csv
+- - - out.csv
+html
+- - - aas.html
+- - - kkak.html
+js
+- - - test.js
+txt
+- - - 01_text.txt
+- - - 02_output.txt
+- - - 02_text.txt
+- - - test.txt
+
+DIR
+- - - TXT_Files
+py
+- - - 01_even_lines.py
+- - - 02_line_numbers.py
+- - - 03_file_manipulator.py
+- - - 04_dir_traversal.py
+- - - 04_dir_traversal_02.py
+- - - 04_directory_traversal.py
+txt
+- - - report.txt
