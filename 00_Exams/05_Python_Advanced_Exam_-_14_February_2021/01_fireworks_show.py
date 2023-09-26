@@ -46,8 +46,8 @@ Input                                       Output
                                             Palm Fireworks: 0
                                             Willow Fireworks: 0
                                             Crossette Fireworks: 0
-5, 6, 4, 16, 11, 5, -15, -8, 0, -16, 0, -22
-1, 13, 5, 3, -7, 32, 19, 3, 5, 7, 22
+5, 6, 5, 6, 5, 6, 5, 10, 5
+10, 5, 10, 5, 8, 5, 8, 5, 8
 """
 from collections import deque
 
@@ -75,14 +75,9 @@ current_effect = effects.popleft()
 current_power = power.pop()
 while True:
 
-    if not any(check_fireworks(fireworks)):
-        are_enough = True
-        break
-
     try:
         while is_zero_or_negative(current_effect):
             current_effect = effects.popleft()
-
         while is_zero_or_negative(current_power):
             current_power = power.pop()
     except IndexError:
