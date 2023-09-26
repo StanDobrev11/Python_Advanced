@@ -18,22 +18,28 @@ def write_(filename, data):
         file.write(data)
 
 
-def ext_dict(tgt_dir):
-    result_dict = {}
+def get_file_list(tgt_dir):
+    path = tgt_dir
+    root_dir = {tgt_dir: []}
+    all_files = {}
     file_list = os.listdir(tgt_dir)  # a list with the directory content
     pattern = r'(\.{1}[a-z]+)'
     for file in file_list:
-        ext = re.findall(pattern, file)[0]
-        if ext not in result_dict:
-            result_dict[ext] = []
-        result_dict[ext].append(file)
+        try:
+            ext = re.findall(pattern, file)[0]
+            if ext not in all_files:
+                all_files[ext] = []
+            all_files[ext].append(file)
+        except IndexError:
+            all_files[file] = get_file_list(path + '/' + file)
 
-    return result_dict
+    root_dir[tgt_dir] = all_files
+    return root_dir
 
 
 def get_data_as_str(ext_dct):
     data = ''
-    for k, v in sorted(ext_dct.items(), key=lambda x: x[0][1]):
+    for k, v in sorted(ext_dct.items(), key=lambda x: x[0]):
         data += f'{k}\n'
         for value in sorted(v):
             data += f'- - - {value}\n'
@@ -41,7 +47,8 @@ def get_data_as_str(ext_dct):
     return data
 
 
-target_dir = 'txt_files'
-result = ext_dict(target_dir)
-result_data = get_data_as_str(result)
+target_dir = 'TXT_FILES'
+
+dirs = get_file_list(target_dir)
+result_data = get_data_as_str(dirs)
 write_('report.txt', result_data)

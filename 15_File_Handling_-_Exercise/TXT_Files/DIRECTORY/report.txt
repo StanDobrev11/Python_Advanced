@@ -1,0 +1,14 @@
+DIRECTORY
+Another Level
+.txt
+- - - 01_text.txt
+- - - 02_output.txt
+- - - 02_text.txt
+- - - test.txt
+.js
+- - - test.js
+.html
+- - - aas.html
+- - - kkak.html
+.csv
+- - - out.csv
