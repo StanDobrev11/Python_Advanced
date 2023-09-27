@@ -75,3 +75,83 @@ left
                         [4, 2]
                         [4, 1]
 """
+
+
+def read_matrix():
+    rows = int(input())
+    return [[x for x in input().split()] for _ in range(rows)]
+
+
+def print_(mtrx):
+    for r in mtrx:
+        print(' '.join(str(x) for x in r))
+
+
+def start_psn(mtrx):
+    for idx, r in enumerate(mtrx):
+        if 'P' in r:
+            c = r.index('P')
+            r = idx
+            return r, c
+
+
+def in_field(mtrx, next_psn):
+    r, c = next_psn
+    if r not in range(len(mtrx)):
+        r = len(mtrx) - abs(r)
+    if c not in range(len(mtrx)):
+        c = len(mtrx[0]) - abs(c)
+
+    return r, c
+
+
+def move_player(cmd, mtrx, cur_row, cur_col, coins):
+    move_mapper = {
+        'left': (cur_row, cur_col - 1),
+        'right': (cur_row, cur_col + 1),
+        'up': (cur_row - 1, cur_col),
+        'down': (cur_row + 1, cur_col),
+    }
+
+    next_r, next_c = in_field(mtrx, move_mapper[cmd])
+
+    if mtrx[next_r][next_c].isdigit():
+        coins += int(mtrx[next_r][next_c])
+        mtrx[next_r][next_c] = 'P'
+        mtrx[cur_row][cur_col] = '0'
+
+    return next_r, next_c, coins
+
+
+def is_wall(mtrx, r, c):
+    if mtrx[r][c] == 'X':
+        return True
+    return False
+
+
+matrix = read_matrix()
+row, col = start_psn(matrix)
+
+command = input()
+coins = 0
+moves_made = [(row, col)]
+hits_wall = False
+while True:
+    row, col, coins = move_player(command, matrix, row, col, coins)
+    moves_made.append((row, col))
+    if is_wall(matrix, row, col):
+        hits_wall = True
+        break
+    if coins >= 100:
+        break
+    command = input()
+
+if hits_wall:
+    coins = int(coins / 2)
+    print(f"Game over! You've collected {coins} coins.")
+else:
+    print(f"You won! You've collected {coins} coins.")
+
+print("Your path:")
+for move in moves_made:
+    print(list(move))

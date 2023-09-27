@@ -95,8 +95,6 @@ def is_valid(mtrx, next_psn):
     return True
 
 
-# TODO adjust for collection letters and concatenate string
-# TODO punish the player if not valid
 def move_player(cmd, mtrx, cur_row, cur_col, text):
 
     move_mapper = {
