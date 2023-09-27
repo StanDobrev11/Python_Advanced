@@ -1,19 +1,18 @@
+from collections import deque
+
+
 def print_(mtrx):
     for row in mtrx:
         print(' '.join(map(str, row)))
+    print(' '.join(str(x) for x in range(1, len(mtrx[0]) + 1)))
 
 
-def place_coin(mtrx, col, player, row=0):
-    mark = 'X' if player == 1 else 'O'
+def place_coin(mtrx, col, mark, row):  # TOP TO BOTTOM
     if row >= ROWS or mtrx[row][col] != '.':
         mtrx[row - 1][col] = mark
         return
     if mtrx[row][col] == '.':
-        place_coin(mtrx, col, player, row + 1)
-
-
-def get_turn(player):
-    return 1 if player == 2 else 2
+        place_coin(mtrx, col, mark, row + 1)
 
 
 def win(mtrx, col, row=0):
@@ -86,32 +85,70 @@ def win(mtrx, col, row=0):
         return True
 
 
+def draw(mtrx):
+    if '.' not in mtrx[0]:
+        return True
+    return False
+
+
 def is_valid(col):
     if col - 1 not in range(COLS):
         return False
+    if matrix[0][col - 1] != '.':
+        return False
     return True
+
+
+def players(count):
+    players_marks_mapper = {
+        2: ('X', 'O'),
+        3: ('X', 'Y', 'Z'),
+        4: ('X', 'Y', 'A', 'B')
+    }
+    turns = []
+    for plr in range(1, count + 1):
+        turns.append((plr, players_marks_mapper[count][plr - 1]))
+    return turns
 
 
 ROWS, COLS = 6, 7
 matrix = [['.'] * COLS for _ in range(ROWS)]
 
-player = 1
 while True:
-    print_(matrix)
-
-    column = int(input(f'Current player {player} -> choose col: '))
-    while True:
-        if not is_valid(column):
-            print('Not valid column')
-            column = int(input(f'Current player {player} -> choose col: '))
+    players_count = int(input("How many players (2-4): "))
+    try:
+        if players_count not in range(2, 5):
+            raise ValueError
         else:
             break
+    except ValueError:
+        print("Not valid number")
+player_turns = deque(players(players_count))
+
+while True:
+    print_(matrix)
+    cur_player = player_turns[0][0]
+    player_mark = player_turns[0][1]
+
+    while True:
+        try:
+            column = int(input(f'Current player {cur_player} -({player_mark}) -> choose col: '))
+            if not is_valid(column):
+                print('Not valid column')
+            else:
+                break
+        except ValueError:
+            print('Please make a choice')
 
     column -= 1
-    place_coin(matrix, column, player)
+    place_coin(matrix, column, player_mark, row=0)
     if win(matrix, column):
-        print(f'Winner is Player {player}')
+        print(f'Winner is Player {cur_player}')
         print_(matrix)
         break
-    player = get_turn(player)
+    elif draw(matrix):
+        print('No winner, game is DRAW')
+        print_(matrix)
+        break
+    player_turns.rotate(-1)
     print()
