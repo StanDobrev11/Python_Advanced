@@ -58,12 +58,6 @@ def read_matrix():
     return [[int(x) if x.isdigit() else x for x in input().split()] for _ in range(SIZE)]
 
 
-prize = {
-'Football': (100, 199),
-'Teddy Bear': (200, 299),
-'Lego Construction Set': (300)
-}
-
 SIZE = 6
 TROWS = 3
 
@@ -81,9 +75,15 @@ for trow in range(TROWS):
         if isinstance(board[r][col], int):
             points += board[r][col]
 
+prize = ''
 if points in range(100, 200):
     prize = 'Football'
 elif points in range(200, 300):
     prize = 'Teddy Bear'
 elif points >= 300:
     prize = 'Lego Construction Set'
+
+if prize:
+    print(f"Good job! You scored {points} points, and you've won {prize}.")
+else:
+    print(f"Sorry! You need {100 - points} points more to win a prize.")
