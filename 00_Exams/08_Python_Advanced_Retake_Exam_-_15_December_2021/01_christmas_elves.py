@@ -44,46 +44,73 @@ Input           Output
                 Elves left: 3, 6, 26, 14
 10 14 22 4 5
 11 16 17 11 1 8
-Toys: 7
+                Toys: 7
                 Energy: 75
                 Elves left: 10, 14
 5 6 7
 2 1 5 7 5 3
-Toys: 3
+                Toys: 3
                 Energy: 20
                 Boxes left: 2, 1
 """
 from collections import deque
 
 REWARD = 1
+HOT_CHOCOLATE = 2
 
-elf_energy = deque(int(x) for x in input().split())
+elves_in_queue = deque(int(x) for x in input().split())
 materials = [int(x) for x in input().split()]
 
 energy_used = 0
 toys_made = 0
-materials_count = 0
+work_count = 0
 
-
-while elf_energy or materials:
-    next_elf = elf_energy[0]
-    next_material = materials[-1]
-
-
-    if next_elf < 5:
-        elf_energy.popleft()
-
-
-
-    if materials_count % 3 == 0 and next_elf >= next_material * 2:
-        toys_made += 2
-        energy_used += next_material * 2
-        next_elf -= next_material * 2
-        elf_energy.append(next_elf)
-
+while elves_in_queue or materials:
 
     try:
-        next_elf = elf_energy.popleft()
-        next_material = materials.pop()
+        next_elf = elves_in_queue[0]
+        next_material = materials[-1]
     except IndexError:
         break
+
+    if next_elf < 5:
+        elves_in_queue.popleft()
+        continue
+
+    work_count += 1
+    if not work_count % 3 == 0 and next_elf >= next_material:
+        next_elf = elves_in_queue.popleft()
+        next_elf -= next_material
+        next_elf += REWARD
+        energy_used += next_material
+        toys_made += 1
+        if work_count % 5 == 0:
+            toys_made -= 1
+            next_elf -= REWARD
+        elves_in_queue.append(next_elf)
+
+    elif work_count % 3 == 0 and next_elf >= next_material * 2:
+        next_elf = elves_in_queue.popleft()
+        next_elf -= next_material * 2
+        next_elf += REWARD
+        energy_used += next_material * 2
+        toys_made += 2
+        if work_count % 5 == 0:
+            toys_made -= 2
+            next_elf -= REWARD
+        elves_in_queue.append(next_elf)
+
+    else:
+        next_elf = elves_in_queue.popleft()
+        next_elf *= HOT_CHOCOLATE
+        elves_in_queue.append(next_elf)
+        continue
+
+    materials.pop()
+
+print(f"Toys: {toys_made}")
+print(f"Energy: {energy_used}")
+if elves_in_queue:
+    print(f"Elves left: {', '.join(map(str, elves_in_queue))}")
+if materials:
+    print(f"Boxes left: {', '.join(map(str, materials))}")
