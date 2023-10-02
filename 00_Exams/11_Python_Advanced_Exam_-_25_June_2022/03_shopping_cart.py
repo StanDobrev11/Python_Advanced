@@ -88,42 +88,47 @@ def shopping_cart(*args):
             continue
         products[item[0]].add(item[1])
 
-    products = print_sorted_data(products)
-    a = 5
+    products = print_sorted_data(products, product_quantity)
+
     return products
 
 
-def print_sorted_data(products):
+def print_sorted_data(products, original_products):
     sorted_data = ''
     if not products:
         return "No products in the cart!"
+
+    for prod in original_products:
+        if prod not in products:
+            products[prod] = []
 
     sorted_list = sorted(products.items(), key=lambda x: (-len(x[1]), x[0]))
     for key, values in sorted_list:
         sorted_data += f"{key}:\n"
         for value in sorted(values):
-            sorted_data += f"- {value}\n"
+            sorted_data += f" - {value}\n"
 
-    lst = [f"- {value}\n" for value in sorted(values)]
     return sorted_data
+
+
+#
+# print(shopping_cart(
+#     ('Pizza', 'ham'),
+#     ('Soup', 'carrots'),
+#     ('Pizza', 'cheese'),
+#     ('Pizza', 'flour'),
+#     ('Dessert', 'milk'),
+#     ('Pizza', 'mushrooms'),
+#     ('Pizza', 'tomatoes'),
+#     'Stop',
+# ))
 
 print(shopping_cart(
     ('Pizza', 'ham'),
-    ('Soup', 'carrots'),
-    ('Pizza', 'cheese'),
-    ('Pizza', 'flour'),
     ('Dessert', 'milk'),
-    ('Pizza', 'mushrooms'),
-    ('Pizza', 'tomatoes'),
+    ('Pizza', 'ham'),
     'Stop',
 ))
-
-# print(shopping_cart(
-#     ('Pizza', 'ham'),
-#     ('Dessert', 'milk'),
-#     ('Pizza', 'ham'),
-#     'Stop',
-# ))
 
 # print(shopping_cart(
 #     'Stop',
