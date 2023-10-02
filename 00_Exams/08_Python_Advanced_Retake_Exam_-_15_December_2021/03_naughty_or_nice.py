@@ -87,42 +87,47 @@ def naughty_or_nice_list(santas_list, *args, **kwargs):
     naughty = []
     not_found = []
 
-    list_by_number = []
-    list_by_names = []
+    santa_by_number = [item[0] for item in santas_list]
+    santa_by_names = [item[1] for item in santas_list]
 
-    for item in santas_list:
-        list_by_number.append(item[0])
-        list_by_names.append(item[1])
+    args = [[x for x in item.split('-')] for item in args]
+    args_dict = {int(item[0]): item[1] for item in args}
 
-    for item in args:
+    for key, value in args_dict.items():
 
         try:
-            index = list_by_number.index(int(item.split('-')[0]))
-            if list_by_number.count(int(item.split('-')[0])) >= 2:
+            index = santa_by_number.index(key)
+            if santa_by_number.count(key) > 1:
                 raise ValueError
         except ValueError:
             continue
 
-        if item.split('-')[1] == 'Nice':
-            nice.append(list_by_names[index])
+        if value == 'Nice':
+            nice.append(santa_by_names[index])
         else:
-            naughty.append(list_by_names[index])
+            naughty.append(santa_by_names[index])
+
+        santa_by_names.pop(index)
+        santa_by_number.pop(index)
 
     for key, value in kwargs.items():
-        if list_by_names.count(key) >= 2:
+
+        try:
+            index = santa_by_names.index(key)
+            if santa_by_names.count(key) > 1:
+                raise ValueError
+        except ValueError:
             continue
+
         if value == 'Nice':
-            if key not in naughty:
-                nice.append(key)
+            nice.append(santa_by_names[index])
         else:
-            if key not in nice:
-                naughty.append(key)
+            naughty.append(santa_by_names[index])
 
-    for name in list_by_names:
-        if name not in nice and name not in naughty:
-            not_found.append(name)
+        santa_by_names.pop(index)
+        santa_by_number.pop(index)
 
-    result = print_(nice, naughty, not_found)
+    result = print_(nice, naughty, santa_by_names)
 
     return result
 
@@ -139,19 +144,19 @@ def print_(nice, naughty, not_found):
     return result_text
 
 
-print(naughty_or_nice_list(
-    [
-        (7, "Peter"),
-        (1, "Lilly"),
-        (2, "Peter"),
-        (12, "Peter"),
-        (3, "Simon"),
-    ],
-    "3-Nice",
-    "5-Naughty",
-    "2-Nice",
-    "1-Nice",
-))
+# print(naughty_or_nice_list(
+#     [
+#         (7, "Peter"),
+#         (1, "Lilly"),
+#         (2, "Peter"),
+#         (12, "Peter"),
+#         (3, "Simon"),
+#     ],
+#     "3-Nice",
+#     "5-Naughty",
+#     "2-Nice",
+#     "1-Nice",
+# ))
 
 # print(naughty_or_nice_list(
 #     [
@@ -166,21 +171,21 @@ print(naughty_or_nice_list(
 #     Katy="Naughty",
 # ))
 
-# print(naughty_or_nice_list(
-#     [
-#         (6, "John"),
-#         (4, "Karen"),
-#         (2, "Tim"),
-#         (1, "Merry"),
-#         (6, "Frank"),
-#     ],
-#     "6-Nice",
-#     "5-Naughty",
-#     "4-Nice",
-#     "3-Naughty",
-#     "2-Nice",
-#     "1-Naughty",
-#     Frank="Nice",
-#     Merry="Nice",
-#     John="Naughty",
-# ))
+print(naughty_or_nice_list(
+    [
+        (6, "John"),
+        (4, "Karen"),
+        (2, "Tim"),
+        (1, "Merry"),
+        (6, "Frank"),
+    ],
+    "6-Nice",
+    "5-Naughty",
+    "4-Nice",
+    "3-Naughty",
+    "2-Nice",
+    "1-Naughty",
+    Frank="Nice",
+    Merry="Nice",
+    John="Naughty",
+))
