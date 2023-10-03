@@ -71,7 +71,6 @@ def play():
     while True:
 
         try:
-
             if not fresh_egg():
                 continue
             if not bad_luck_egg():
