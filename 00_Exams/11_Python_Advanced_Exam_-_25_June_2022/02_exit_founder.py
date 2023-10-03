@@ -109,24 +109,35 @@ def fall_in_trap(player):
 
 def hits_a_wall(player):
     print(f"{player} hits a wall and needs to rest.")
-    players.rotate()
+    to_rest.add(player)
 
 
-players = deque(input().split(', '))
-matrix = read_matrix()
+def play(plrs, mtrx, rest):
+    mapper = {
+        'E': exit_game,
+        'T': fall_in_trap,
+        'W': hits_a_wall,
+    }
 
-mapper = {
-    'E': exit_game,
-    'T': fall_in_trap,
-    'W': hits_a_wall,
-}
+    while True:
 
-while True:
-    turn = players[0]
-    row, col = eval(input())
+        row, col = eval(input())
+        current_player = plrs[0]
 
-    cell = matrix[row][col]
-    if cell in mapper:
-        mapper[cell](turn)
+        if current_player in rest:
+            plrs.rotate()
+            rest.remove(current_player)
+            continue
 
-    players.rotate()
+        cell = mtrx[row][col]
+        if cell in mapper:
+            mapper[cell](current_player)
+
+        plrs.rotate()
+
+
+if __name__ == "__main__":
+    players = deque(input().split(', '))
+    matrix = read_matrix()
+    to_rest = set()
+    play(players, matrix, to_rest)
