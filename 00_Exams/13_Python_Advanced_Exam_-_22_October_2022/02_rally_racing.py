@@ -192,9 +192,9 @@ if __name__ == "__main__":
         'left': (0, -1),
         'right': (0, 1),
     }
-    n = int(input())
+    matrix_size = int(input())
     car_num = input()
-    matrix = read_matrix(n)
+    matrix = read_matrix(matrix_size)
     finished, distance = play()
     print_result(finished, car_num, distance)
     print_matrix()
