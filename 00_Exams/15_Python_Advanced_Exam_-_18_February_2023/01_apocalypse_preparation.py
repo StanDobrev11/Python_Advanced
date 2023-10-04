@@ -69,6 +69,8 @@ Input           Output
                 MedKit ‐ 1
                 Patch ‐ 1
                 Textiles left: 30, 20
+30 30 10 80 60 20
+40 20 30 10 75
 """
 from collections import deque
 
@@ -91,7 +93,11 @@ def start_crafting():
             remaining = combined - 100
             textiles.popleft()
             medicaments.pop()
-            medicaments[-1] += remaining
+
+            try:
+                medicaments[-1] += remaining
+            except IndexError:
+                medicaments.append(remaining)
 
         elif combined not in medicine_mapper:
             textiles.popleft()
@@ -109,10 +115,18 @@ def print_outcome():
     for key, value in sorted(items_crafted.items(), key=lambda x: (-x[1], x[0])):
         print(f"{key} - {value}")
 
-    if textiles:
-        print(f"Textiles left: {', '.join(map(str, sorted(textiles, reverse=True)))}")
     if medicaments:
-        print(f"Medicaments left: {', '.join(map(str, sorted(medicaments, reverse=True)))}")
+        medicaments.reverse()
+        print(f"Medicaments left: {', '.join(map(str, medicaments))}")
+    if textiles:
+        print(f"Textiles left: {', '.join(map(str, textiles))}")
+
+    #
+    #
+    # if textiles:
+    #     print(f"Textiles left: {', '.join(map(str, sorted(textiles, reverse=True)))}")
+    # if medicaments:
+    #     print(f"Medicaments left: {', '.join(map(str, sorted(medicaments, reverse=True)))}")
 
 
 if __name__ == "__main__":
