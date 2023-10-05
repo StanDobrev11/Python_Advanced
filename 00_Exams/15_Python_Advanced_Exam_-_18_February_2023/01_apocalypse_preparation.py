@@ -121,13 +121,6 @@ def print_outcome():
     if textiles:
         print(f"Textiles left: {', '.join(map(str, textiles))}")
 
-    #
-    #
-    # if textiles:
-    #     print(f"Textiles left: {', '.join(map(str, sorted(textiles, reverse=True)))}")
-    # if medicaments:
-    #     print(f"Medicaments left: {', '.join(map(str, sorted(medicaments, reverse=True)))}")
-
 
 if __name__ == "__main__":
     medicine_mapper = {
