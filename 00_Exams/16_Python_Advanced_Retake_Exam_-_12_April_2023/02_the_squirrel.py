@@ -70,12 +70,18 @@ h***
                         The squirrel is out of the
                         field.
                         Hazelnuts collected: 0
+4
+down, left, down, down, left, left, up, up, up, up
+h**s
+***h
+***t
+**h*
 """
 from collections import deque
 
 
 def read_field(n):
-    return [[x for x in input().split()] for _ in range(n)]
+    return [[x for x in list(input())] for _ in range(n)]
 
 
 def print_field():
@@ -97,48 +103,39 @@ def valid_position(row, col):
     return True
 
 
-def move_to_position(course, row, col):
-    next_row = row + direction_mapper[course][0]
-    next_col = col + direction_mapper[course][1]
-
-    if valid_position(next_row, next_col):
-        location = field[next_row][next_col]
-    else:
-        return row, col
-
-    try:
-        field_mapper[location]()
-    except KeyError:
-        return row, col
-
-    field[row][col] = '-'
-    field[next_row][next_col] = 's'
-    return next_row, next_col
-
-
 def start_collecting():
+    hazelnuts_collected = 0
     row, col = squirrel_position()
+
     while commands:
         next_direction = commands.popleft()
-        row, col = move_to_position(next_direction, row, col)
+        next_row = row + direction_mapper[next_direction][0]
+        next_col = col + direction_mapper[next_direction][1]
 
-    return print_outcome()
+        if valid_position(next_row, next_col):
+            location = field[next_row][next_col]
 
+            if location == 'h':
+                hazelnuts_collected += 1
+                field[next_row][next_col] = '*'
+                if hazelnuts_collected == 3:
+                    print("Good job! You have collected all hazelnuts!")
+                    print(f"Hazelnuts collected: {hazelnuts_collected}")
+                    raise SystemExit
+            elif location == 't':
+                print("Unfortunately, the squirrel stepped on a trap...")
+                print(f"Hazelnuts collected: {hazelnuts_collected}")
+                raise SystemExit
+        else:
+            print("The squirrel is out of the field.")
+            print(f"Hazelnuts collected: {hazelnuts_collected}")
+            raise SystemExit
 
-def print_outcome():
-    pass
+        row, col = next_row, next_col
 
-
-def collect_hazelnut():
-    return 1
-
-
-def free_step():
-    pass
-
-
-def trapped():
-    pass
+    if hazelnuts_collected < 3:
+        print("There are more hazelnuts to collect.")
+        print(f"Hazelnuts collected: {hazelnuts_collected}")
 
 
 if __name__ == "__main__":
@@ -148,13 +145,8 @@ if __name__ == "__main__":
         'left': (0, -1),
         'right': (0, 1),
     }
-    field_mapper = {
-        'h': collect_hazelnut,
-        '*': free_step,
-        't': trapped,
-    }
-    moves_made = 0
-    hazelnuts_collected = 0
+
     field_rows = int(input())
     commands = deque(x for x in input().split(', '))
     field = read_field(field_rows)
+    start_collecting()
