@@ -79,3 +79,40 @@ if __name__ == "__main__":
     monsters_armor = deque(int(x) for x in input().split(','))
     soldiers_attack = [int(x) for x in input().split(',')]
     fight()
+
+# from collections import deque
+#
+# defence = deque(int(x) for x in input().split(','))
+# attack = [int(x) for x in input().split(',')]
+#
+# monsters = len(defence)
+#
+# while True:
+#
+#     try:
+#         current_attack = attack.pop()
+#         current_defence = defence.popleft()
+#     except IndexError:
+#         break
+#
+#     if current_attack < current_defence:
+#         current_defence -= current_attack
+#         defence.append(current_defence)
+#
+#     elif current_attack > current_defence:
+#         current_attack -= current_defence
+#
+#         try:
+#             attack[-1] += current_attack
+#         except IndexError:
+#             attack.append(current_attack)
+#
+#     if not attack or not defence:
+#         break
+#
+# if not defence:
+#     print("All monsters have been killed!")
+# if not attack:
+#     print("The soldier has been defeated.")
+#
+# print(f"Total monsters killed: {monsters - len(defence)}")

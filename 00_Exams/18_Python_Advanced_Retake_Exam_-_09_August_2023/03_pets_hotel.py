@@ -127,3 +127,38 @@ print(accommodate_new_pets(
 # ("cat", 5.8),
 # ("cat", 2.7),
 # ))
+
+# from collections import deque
+#
+#
+# def accommodate_new_pets(capacity: int, weight_limit: float, *args):
+#     accommodated_pets = {}
+#     args = deque(args)
+#     while capacity > 0:
+#
+#         try:
+#             next_pet = args.popleft()
+#         except IndexError:
+#             break
+#
+#         pet_type, pet_weight = next_pet
+#
+#         if pet_weight > weight_limit:
+#             continue
+#
+#         if pet_type not in accommodated_pets:
+#             accommodated_pets[pet_type] = []
+#
+#         accommodated_pets[pet_type].append(pet_weight)
+#         capacity -= 1
+#
+#     if not args:
+#         text = [f"All pets are accommodated! Available capacity: {capacity}."]
+#
+#     else:
+#         text = ["You did not manage to accommodate all pets!"]
+#
+#     text += ['Accommodated pets:']
+#     text += [f"{key}: {len(value)}" for key, value in sorted(accommodated_pets.items())]
+#
+#     return '\n'.join(text)

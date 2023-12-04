@@ -173,3 +173,73 @@ if __name__ == "__main__":
     rows, cols = [int(x) for x in input().split()]
     area = read_area(rows)
     deliver_the_pizza()
+
+#
+# def read_matrix(r, c):
+#     return [list(input()) for _ in range(r)]
+#
+#
+# def print_matrix(mtrx):
+#     for r in mtrx:
+#         print(''.join(r))
+#
+#
+# def get_position(mtrx, letter):
+#     for i_r, r in enumerate(mtrx):
+#         for i_c, c in enumerate(r):
+#             if mtrx[i_r][i_c] == letter:
+#                 return i_r, i_c
+#
+#
+# def make_move(mtrx, coordinates, direction):
+#     old_r, old_c = coordinates
+#
+#     move_mapper = {
+#         'up': (old_r - 1, old_c),
+#         'down': (old_r + 1, old_c),
+#         'left': (old_r, old_c - 1),
+#         'right': (old_r, old_c + 1),
+#     }
+#
+#     new_r, new_c = move_mapper[direction]
+#
+#     if not valid_move(new_r, new_c):
+#         print("The delivery is late. Order is canceled.")
+#         end_r, end_c = get_position(matrix, 'B')
+#         mtrx[end_r][end_c] = ' '
+#         print_matrix(mtrx)
+#         raise SystemExit
+#
+#     if mtrx[new_r][new_c] == '*':
+#         return old_r, old_c
+#
+#     elif mtrx[new_r][new_c] == 'P':
+#         mtrx[new_r][new_c] = 'R'
+#         print("Pizza is collected. 10 minutes for delivery.")
+#
+#     elif mtrx[new_r][new_c] == '-':
+#         mtrx[new_r][new_c] = '.'
+#
+#     elif mtrx[new_r][new_c] == 'A':
+#         mtrx[new_r][new_c] = 'P'
+#         print("Pizza is delivered on time! Next order...")
+#         print_matrix(mtrx)
+#         raise SystemExit
+#
+#     return new_r, new_c
+#
+#
+# def valid_move(r, c):
+#     if r not in range(len(matrix)) or c not in range(len(matrix[0])):
+#         return False
+#     return True
+#
+#
+# rows, cols = [int(x) for x in input().split()]
+# matrix = read_matrix(rows, cols)
+#
+# delivery_boy_coordinates = get_position(matrix, 'B')
+#
+# while True:
+#     move_to = input()
+#     delivery_boy_coordinates = make_move(matrix, delivery_boy_coordinates, move_to)

@@ -107,6 +107,25 @@ students_credits(
                 JavaScript Development ‐ 11.5
                 Java Development ‐ 5.0
 """
+# def students_credits(*args):
+#     credits_received = 0
+#     courses_passed = {}
+#
+#     for course_info in args:
+#         course, max_credits, max_points, score = course_info.split('-')
+#
+#         current_credits = float(score) * float(max_credits) / float(max_points)
+#         credits_received += current_credits
+#         courses_passed[course] = current_credits
+#
+#     if credits_received >= 240:
+#         text = [f"Diyan gets a diploma with {credits_received :.1f} credits."]
+#     else:
+#         text = [f"Diyan needs {240 - credits_received :.1f} credits more for a diploma."]
+#
+#     text += [f"{name} - {crd :.1f}" for name, crd in sorted(courses_passed.items(), key=lambda x: -x[1])]
+#
+#     return '\n'.join(text)
 
 
 def students_credits(*args):  # "{course name}‐{credits}‐{max test points}‐{diyan's points}".

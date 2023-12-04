@@ -172,3 +172,72 @@ if __name__ == "__main__":
     last_row, last_col = begin_battle()
     print_outcome(last_row, last_col)
     print_battlefield()
+
+# def read_matrix(r):
+#     matrix = []
+#     for _ in range(r):
+#         line = list(input())
+#         matrix.append(line)
+#
+#     return matrix
+#
+#
+# def print_matrix(mtrx):
+#     for r in mtrx:
+#         print(''.join(r))
+#
+#
+# def get_position(mtrx, letter):
+#     for row_idx, r in enumerate(mtrx):
+#         for col_idx, c in enumerate(r):
+#             if mtrx[row_idx][col_idx] == letter:
+#                 return row_idx, col_idx
+#
+#
+# def move_sub(mtrx, direction, r, c):
+#     global hits_taken
+#     global battle_cruisers
+#
+#     prv_r, prv_c = r, c
+#
+#     course_mapper = {
+#         'up': (r - 1, c),
+#         'down': (r + 1, c),
+#         'left': (r, c - 1),
+#         'right': (r, c + 1)
+#     }
+#
+#     r, c = course_mapper[direction]
+#
+#     if mtrx[r][c] == '-':
+#         mtrx[r][c], mtrx[prv_r][prv_c] = 'S', '-'
+#
+#     elif mtrx[r][c] == '*':
+#         hits_taken += 1
+#         mtrx[r][c], mtrx[prv_r][prv_c] = 'S', '-'
+#
+#     elif mtrx[r][c] == 'C':
+#         battle_cruisers -= 1
+#         mtrx[r][c], mtrx[prv_r][prv_c] = 'S', '-'
+#
+#     return r, c
+#
+#
+# rows = int(input())
+#
+# bfield = read_matrix(rows)
+# row, col = get_position(bfield, 'S')
+#
+# hits_taken = 0
+# battle_cruisers = 3
+#
+# while hits_taken < 3 and battle_cruisers > 0:
+#     course = input()
+#     row, col = move_sub(bfield, course, row, col)
+#
+# if hits_taken == 3:
+#     print(f"Mission failed, U-9 disappeared! Last known coordinates [{row}, {col}]!")
+# if battle_cruisers == 0:
+#     print("Mission accomplished, U-9 has destroyed all battle cruisers of the enemy!")
+#
+# print_matrix(bfield)

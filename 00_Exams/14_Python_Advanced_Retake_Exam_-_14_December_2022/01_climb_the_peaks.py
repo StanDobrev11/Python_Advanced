@@ -154,3 +154,46 @@ if __name__ == "__main__":
     stamina = deque(int(x) for x in input().split(', '))
     start_climbing()
     report_result()
+
+#
+# from collections import deque
+#
+# peak_map = {
+#     'Vihren': 80,
+#     'Kutelo': 90,
+#     'Banski Suhodol': 100,
+#     'Polezhan': 60,
+#     'Kamenitza': 70,
+# }
+#
+# peaks_not_climbed = deque(['Vihren', 'Kutelo', 'Banski Suhodol', 'Polezhan', 'Kamenitza'])
+#
+# food_supplies = [int(x) for x in input().split(', ')]
+# stamina = deque(int(x) for x in input().split(', '))
+#
+# climbed_peaks = []
+#
+# for day in range(7):
+#
+#     if not peaks_not_climbed:
+#         break
+#
+#     daily_food = food_supplies.pop()
+#     daily_stamina = stamina.popleft()
+#
+#     combined_value = daily_food + daily_stamina
+#
+#     next_peak = peaks_not_climbed[0]
+#
+#     if combined_value >= peak_map[next_peak]:
+#         climbed_peaks.append(peaks_not_climbed.popleft())
+#
+# if not peaks_not_climbed:
+#     print("Alex did it! He climbed all top five Pirin peaks in one week -> @FIVEinAWEEK")
+#
+# else:
+#     print("Alex failed! He has to organize his journey better next time -> @PIRINWINS")
+#
+# if climbed_peaks:
+#     print("Conquered peaks:")
+#     print('\n'.join(climbed_peaks))
