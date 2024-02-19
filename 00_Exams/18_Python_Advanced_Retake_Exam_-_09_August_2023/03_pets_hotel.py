@@ -83,7 +83,6 @@ def accommodate_new_pets(capacity, max_weight, *args):
         else:
             break
 
-
     if pet_list:
         output = f"You did not manage to accommodate all pets!\n"
     else:
@@ -104,12 +103,12 @@ print(accommodate_new_pets(
     ("cat", 2.7),
 ))
 
-# print(accommodate_new_pets(
-#     10,
-#     15.0,
-#     ("cat", 5.8),
-#     ("dog", 10.0),
-# ))
+print(accommodate_new_pets(
+    10,
+    15.0,
+    ("cat", 5.8),
+    ("dog", 10.0),
+))
 
 # print(accommodate_new_pets(
 #     10,
